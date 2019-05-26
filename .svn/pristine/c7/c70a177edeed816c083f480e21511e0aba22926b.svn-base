@@ -1,0 +1,53 @@
+<?php
+namespace app\wshop\controller;
+use think\Controller;
+use think\Session;
+use think\Db;
+class Shop extends UserBase
+{
+    public function getshopmsg(){
+        $id = $this->login_id;
+        $msg = Db::table('shop')
+                    ->where('U_Id',$id)
+                    ->select();
+        foreach ($msg as $key => $value) {
+            $msg[$key]['goods'] = Db::table('shop_goods')
+                                        ->join('goods','G_Id=Goods_Id')
+                                        ->where('S_Id',$value['Shop_Id'])
+                                        ->select();
+        }
+        if($msg){
+            return json_encode(array('result'=>'1','info'=>$msg));
+        }else{
+            return json_encode(array('result'=>'0','info'=>'您还没有注册店铺'));
+        }
+    }
+    public function getaddgoo(){
+        $id = $this->login_id;
+        $sid = $_POST['sid'];
+        $goo = Db::table('goods')
+                    ->where('U_Id',$id)
+                    ->select();
+        $sg = Db::table('shop_goods')
+                    ->where('S_Id',$sid)
+                    ->select();
+        foreach($goo as $key => $value){
+            foreach ($sg as $keyy => $valuee) {
+                if($value['Goods_Id']==$value['G_Id']){
+                    unset($goo[$key]);
+                }
+            }
+        }
+        if(count($goo)!=0){
+            return json_encode(array('result'=>'1','info'=>$goo));
+        }else{
+            return json_encode(array('result'=>'0','info'=>'没有可以添加的商品'));
+        }
+    }
+    public function createshop(){
+        $id = $this->login_id;
+        $data = $_POST;
+
+    }
+ 
+}

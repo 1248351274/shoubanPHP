@@ -1,0 +1,143 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>后台登录-X-admin1.1</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="shortcut icon" href="/favicon.ico" type="__IMG__/x-icon" />
+    <link rel="stylesheet" href="__CSS__/font.css">
+    <link rel="stylesheet" href="__CSS__/xadmin.css">
+    <link rel="stylesheet" href="__CSS__/swiper.min.css">
+    <script type="text/javascript" src="__JS__/jquery.min.js"></script>
+    <script type="text/javascript" src="__JS__/swiper.jquery.min.js"></script>
+    <script src="__LIB__/layui/layui.js" charset="utf-8"></script>
+    <script type="text/javascript" src="__JS__/xadmin.js"></script>
+    <script type="text/javascript" src="__JS__/jquery.form.js"></script>
+
+</head>
+<body>
+    <!-- 中部开始 -->
+    <div class="wrapper">
+        <!-- 右侧主体开始 -->
+        <div class="page-content">
+          <div class="content">
+            <!-- 右侧内容框架，更改从这里开始 -->
+            
+                <div class="layui-form-item">
+                    <label for="Logis_Name" class="layui-form-label">
+                       物流公司名
+                    </label>
+                    <div class="layui-input-inline">
+                        <input type="text" id="Logis_Name" name="Logis_Name" value="{$msg.Logis_Name}" disabled="" class="layui-input">
+                        <input type="hidden" id="Adv_Id" name='Adv_Id' value="{$msg.Adv_Id}">
+                    </div>
+                </div>
+                <div class="layui-form-item layui-form-text">
+                    <label class="layui-form-label">广告位1</label>
+                    <div class="layui-input-block">
+                        <textarea placeholder="请输入内容" id="Adv_Content1" name="Adv_Content1" class="layui-textarea">{$msg.Adv_Content1}</textarea>
+                    </div>
+                </div>
+                <div class="layui-form-item layui-form-text">
+                    <label class="layui-form-label">广告位2</label>
+                    <div class="layui-input-block">
+                        <textarea placeholder="请输入内容" id="Adv_Content2" name="Adv_Content2" class="layui-textarea">{$msg.Adv_Content2}</textarea>
+                    </div>
+                </div>
+                <div class="layui-form-item layui-form-text">
+                    <label class="layui-form-label">广告位3</label>
+                    <div class="layui-input-block">
+                        <textarea placeholder="请输入内容" id="Adv_Content3" name="Adv_Content3" class="layui-textarea">{$msg.Adv_Content3}</textarea>
+                    </div>
+                </div>
+                <div class="layui-form-item layui-form-text">
+                    <label class="layui-form-label">广告位4</label>
+                    <div class="layui-input-block">
+                        <textarea placeholder="请输入内容" id='Adv_Content4' name="Adv_Content4" class="layui-textarea">{$msg.Adv_Content4}</textarea>
+                    </div>
+                </div>
+                <div class="layui-form-item">
+                    <label class="layui-form-label">广告位5</label>
+                        <img src="{$msg.Adv_Content5}" id="img" style="width: 200px;height: 100px" alt="无图片">
+                        <button id='delbtn' class="layui-btn">删除图片</button>
+                        <form id="upload" style="padding-left: 120px;"  method="post" enctype="multipart/form-data" action="{:url('index/adver/upload')}">
+                            <input type="file" id="upimg" name="upimg">
+                        </form>
+                </div>
+                <div class="layui-form-item">
+                    <label for="L_repass" class="layui-form-label">
+                    </label>
+                    <button  class="layui-btn" lay-filter="save" lay-submit="" id="edit_btn">
+                        修改
+                    </button>
+                </div>
+            
+            
+            <!-- 右侧内容框架，更改从这里结束 -->
+          </div>
+        </div>
+        <!-- 右侧主体结束 -->
+    </div>
+    <!-- 中部结束 -->
+<script>
+    $(document).ready(function(){
+        if($('#img').attr('src')==''){
+            $('#delbtn').hide();
+        }
+    })
+    $('#upimg').change(function(){
+        $('#upload').ajaxSubmit({
+            dataType:'json',
+            success:function(data){
+                if(data.status==1){
+                    var src=data.src;
+                    $('#img').attr('src',src);
+                    $('#delbtn').show();
+                    layer.msg(data.content);
+                }else{
+                    layer.msg(data.content);
+                }
+            },
+            error:function(){
+                layer.msg('上传失败');
+            }
+        })
+    });
+    $('#delbtn').click(function(){
+        $.post(
+            "{:url('index/adver/delimg')}",
+            {imgpath:$('#img').attr('src')},
+            function(data){
+                if(data==1){
+                    layer.msg('删除成功');
+                    $('#img').attr('src','');
+                    $('#delbtn').hide();
+                }else{
+                    layer.msg('删除失败');
+                }
+            }
+        )
+    })
+    $('#edit_btn').click(function(){
+        
+        $.ajax({
+            type:"POST",
+            dataType:"json",
+            url:"{:url('index/adver/edit')}",
+            data:{Adv_Id:$('#Adv_Id').val(),Adv_Content1:$('#Adv_Content1').val(),Adv_Content2:$('#Adv_Content2').val(),Adv_Content3:$('#Adv_Content3').val(),Adv_Content4:$('#Adv_Content4').val(),Adv_Content5:$('#img').attr('src')},
+            // data:$('#form').serialize(),
+            success:function(data){
+                if(data==1){
+                    parent.location.reload();
+                }else{
+                    layer.msg('修改失败')
+                }
+            },
+            error:function(){
+                layer.msg('修改失败！')
+            }
+        })
+    })
+</script>
+</body>
+</html>

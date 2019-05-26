@@ -1,0 +1,214 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>后台登录-X-admin1.1</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="shortcut icon" href="/favicon.ico" type="__IMG__/x-icon" />
+    <link rel="stylesheet" href="__CSS__/font.css">
+    <link rel="stylesheet" href="__CSS__/xadmin.css">
+    <link rel="stylesheet" href="__CSS__/swiper.min.css">
+    <script type="text/javascript" src="__JS__/jquery.min.js"></script>
+    <script type="text/javascript" src="__JS__/swiper.jquery.min.js"></script>
+    <script src="__LIB__/layui/layui.js" charset="utf-8"></script>
+    <script type="text/javascript" src="__JS__/xadmin.js"></script>
+    <style>
+    .pagination{
+        float: right;
+        margin-right: 60px;
+    }
+    .pagination li{
+        float: left;
+        margin-left: 20px;
+    }
+    .pagination .active{color:red}
+    .pagination .disabled{color:#888888}
+    #tb{
+        table-layout: fixed;
+    }
+    #tb tr{
+        height: 30px;
+    }
+    #tb td{
+        height: 30px;
+        white-space: nowrap; 
+        text-overflow: ellipsis;
+        overflow: hidden;
+    }
+    </style>
+</head>
+<body>
+<div class="page-content">
+        <form class="layui-form xbs" action="{:url('index/adver/index')}" method="get" id="sform">
+        <div class="layui-form-pane" style="text-align: center;">
+          <div class="layui-form-item" style="display: inline-block;">
+            <label class="layui-form-label xbs768">日期范围</label>
+            <div class="layui-input-inline xbs768">
+              <input class="layui-input" name="start" value="{$start ? $start : '';}" placeholder="开始日" id="LAY_demorange_s">
+            </div>
+            <div class="layui-input-inline xbs768">
+              <input class="layui-input" name="end" value="{$end ? $end : '';}" placeholder="截止日" id="LAY_demorange_e">
+            </div>
+            <div class="layui-input-inline">
+              <input type="text" name="logisname"  placeholder="请输入物流公司名" autocomplete="off" value="{$logisname ? $logisname : '';}" class="layui-input">
+            </div>
+            <div class="layui-input-inline" style="width:80px">
+                <button class="layui-btn" id="search"  lay-submit="" lay-filter="sreach"><i class="layui-icon">&#xe615;</i></button>
+            </div>
+          </div>
+        </div> 
+    </form>
+  <div class="content">
+    <!-- 右侧内容框架，更改从这里开始 -->
+    <xblock><!-- <button class="layui-btn layui-btn-danger" onclick="delAll()"><i class="layui-icon">&#xe640;</i>批量删除</button> --><button class="layui-btn" onclick="member_add('添加用户','{:url("index/adver/add_show")}','600','500')"><i class="layui-icon">&#xe608;</i>添加</button><span class="x-right" style="line-height:40px">共有数据：{$count} 条</span></xblock>
+    <table class="layui-table" id="tb">
+        <thead>
+            <tr>
+                <th style="width:30px">
+                    ID
+                </th>
+                <th>
+                    物流公司名
+                </th>
+                <th>
+                    广告位1
+                </th>
+                <th>
+                    广告位2
+                </th>
+                <th>
+                    广告位3
+                </th>
+                <th>
+                    广告位4
+                </th>
+                <th>
+                    广告位5(图片)
+                </th>
+                <th>
+                    更新时间
+                </th>
+                <th style="width:60px;">
+                    操作
+                </th>
+            </tr>
+        </thead>
+        <tbody>
+        {volist name="list" id="vo"}
+            <tr>
+                <td>
+                    {$i}
+                </td>
+                <td>
+                    {$vo.Logis_Name}
+                </td>
+                <td >
+                    {$vo.Adv_Content1}
+                </td>
+                <td >
+                    {$vo.Adv_Content2}
+                </td>
+                <td >
+                    {$vo.Adv_Content3}
+                </td>
+                <td >
+                    {$vo.Adv_Content4}
+                </td>
+                <td>
+                    <img src="{$vo.Adv_Content5}" style="width: 50px;height: 30px;" class="img" alt="">
+                </td>
+                <td>
+                    {$vo.Adv_UpTime|date="Y-m-d H:i:s",###}
+                </td>
+                <td class="td-manage">
+                    
+                    <a title="编辑" href="javascript:;" onclick="member_edit('编辑','{:url("index/adver/edit_show",['id'=>$vo['Adv_Id']])}','','510')"
+                    class="ml-5" style="text-decoration:none">
+                        <i class="layui-icon">&#xe642;</i>
+                    </a>&nbsp;&nbsp;
+                    <a title="删除" href="javascript:;" onclick="member_del(this,{$vo.Adv_Id})" 
+                    style="text-decoration:none">
+                        <i class="layui-icon">&#xe640;</i>
+                    </a>
+                </td>
+            </tr>
+        {/volist}
+        </tbody>
+        <tr> 
+            <td colspan="9">
+                {$list->render()} 
+            </td>
+        </tr>
+    </table>
+    <!-- 右侧内容框架，更改从这里结束 -->
+  </div>
+</div>
+<script>
+        layui.use(['laydate'], function(){
+          laydate = layui.laydate;//日期插件
+
+          //以上模块根据需要引入
+          var start = {
+            min: '2000-06-16 23:59:59'
+            ,max: laydate.now()
+            ,istoday: false
+            ,choose: function(datas){
+              end.min = datas; //开始日选好后，重置结束日的最小日期
+              end.start = datas //将结束日的初始值设定为开始日
+            }
+          };
+          
+          var end = {
+            min: laydate.now()
+            ,max: '2099-06-16 23:59:59'
+            ,istoday: false
+            ,choose: function(datas){
+              start.max = datas; //结束日选好后，重置开始日的最大日期
+            }
+          };
+          
+          document.getElementById('LAY_demorange_s').onclick = function(){
+            start.elem = this;
+            laydate(start);
+          }
+          document.getElementById('LAY_demorange_e').onclick = function(){
+            end.elem = this
+            laydate(end);
+          }
+          
+        });
+        $('#search').click(function(){
+            $('#sform').submit();
+        })
+    function member_edit (title,url,w,h) {
+        x_admin_show(title,url,w,h); 
+    }
+    function member_add (title,url,w,h) {
+        x_admin_show(title,url,w,h); 
+    }
+    function member_del(obj,id){
+        layer.confirm('确认要删除吗？',function(index){
+            //发异步删除数据
+            $.ajax({
+                type:"POST",
+                dataType:"json",
+                url:"{:url('index/adver/delete')}",
+                data:{id:id},
+                success:function(data){
+                    if(data==1){
+                        $(obj).parents("tr").remove();
+                        layer.msg('已删除!',{icon:1,time:1000});
+                    }else{
+                        layer.msg('删除失败')
+                    }
+                },
+                error:function(){
+                    layer.msg('删除失败')
+                }
+            })
+            
+        });
+    }
+</script>
+</body>
+</html>

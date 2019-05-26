@@ -1,0 +1,80 @@
+<?php
+namespace app\index\controller;
+use \think\Controller;
+use \think\Db;
+use \think\Session;
+class Img extends Sesspar
+{   
+    public function lunbo_show(){
+        $rs = Db::table('banner')->paginate(10,false,['query'=>request()->param()]);
+        $count = Db::table('banner')->count();
+        $this->assign('list',$rs);
+        $this->assign('count',$count);
+		return $this->fetch();
+    }
+    public function banner_off(){
+        $id = $_POST['id'];
+        $rs = Db::table('banner')->where('Id',$id)->update(['Status'=>'0']);
+        if($rs){
+            echo 1;
+        }else{
+            echo 0;
+        }
+    }
+    public function banner_on(){
+        $id = $_POST['id'];
+        $rs = Db::table('banner')->where('Id',$id)->update(['Status'=>'1']);
+        if($rs){
+            echo 1;
+        }else{
+            echo 0;
+        }
+    }
+    public function banner_del(){
+        $id = $_POST['id'];
+        $img = Db::table('banner')->where('Id',$id)->find();
+        $rs = Db::table('banner')->where('Id',$id)->delete();
+        if($rs){
+            unlink(substr($img['Img'],5));
+            echo 1;
+        }else{
+            echo 0;
+        }
+    }
+    public function delallban(){
+        $id = $_POST['id'];
+        Db::startTrans();
+        try{
+            foreach ($id as $key => $value) {
+                $img = Db::table('banner')->where("Id",$value)->find();
+                Db::table('banner')->where('Id',$value)->delete();
+                unlink(substr($img['Img'],5));
+            }
+            Db::commit();
+            echo 1;
+        }catch(\Exception $e){
+            Db::rollback();
+            echo 0;
+        }
+    }
+    public function upbanner(){
+        $file = request()->file('upimg');
+        $info = $file->validate(['ext'=>'jpg,png,gif,jpeg'])->move(ROOT_PATH . 'public' . DS . 'images' . DS . 'banner');
+        $src = '/hcb/public/images/banner/'.$info->getSaveName();
+        //$src = '/yhwl/a/public/uploads/'.$info->getSaveName();
+        if($info){
+            $data['Img'] = $src;
+            $data['Time'] = time();
+            Db::table('banner')->insert($data);
+            $data['status'] = 1;
+            $data['src'] = $src;  
+            $data['content'] = "上传成功";  
+            return $data; 
+        }else{
+
+            $data['status'] = 0;  
+            $data['content'] = "上传失败";  
+            return $data; 
+        }
+    }
+}

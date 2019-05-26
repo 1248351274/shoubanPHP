@@ -1,0 +1,85 @@
+<?php
+namespace app\index\controller;
+use \think\Controller;
+use \think\Db;
+use \think\Session;
+class Admin extends Sesspar
+{
+    public function index()
+    {	
+    	$rs = Db::table('admin')
+                ->where('Power',2)
+    			->paginate(10);
+        $count = Db::table('admin')
+                ->where('Power',2)
+                ->count();
+    	$this->assign('count',$count);
+    	$this->assign('list',$rs);
+		return $this->fetch();
+    }
+    public function add_show(){
+        return $this->fetch();
+    }
+    public function add(){
+        $data = $_POST;
+        $data['Creat_Time'] = time();
+        $data['Last_Time'] = time();
+        $data['Adder'] = Session::get('username');
+        $data['Password'] = md5($data['Password']);
+        $rs = Db::table('admin')->insert($data);
+        if($rs){
+            echo 1;
+        }else{
+            echo 0;
+        }
+    }
+    public function user_on(){
+        $id = $_POST['id'];
+        $rs = Db::table('admin')->where('Id',$id)->update(['Status'=>'1']);
+        if($rs){
+            echo 1;
+        }else{
+            echo 0;
+        }
+    }
+    public function user_off(){
+        $id = $_POST['id'];
+        $rs = Db::table('admin')->where('Id',$id)->update(['Status'=>'0']);
+        if($rs){
+            echo 1;
+        }else{
+            echo 0;
+        }
+    }
+    public function edit_show($id){
+        $rs = Db::table('admin')
+                ->where('Id',$id)
+                ->find();
+        $this->assign('msg',$rs);
+        return $this->fetch();
+
+    }
+    public function edit(){
+        $data = $_POST;
+        if($data['Password']==''){
+            unset($data['Password']);
+        }else{
+            $data['Password'] = md5($data['Password']);
+        }
+        $rs = Db::table('admin')->where('Id',$data['Id'])->update($data);
+        if($rs){
+            echo 1;
+        }else{
+            echo 0;
+        }
+    }
+    public function delete(){
+        $id = $_POST['id'];
+        $rs = Db::table('admin')->where('Id',$id)->delete();
+        if($rs){
+            echo 1;
+        }else{
+            echo 0;
+        }
+    }
+}

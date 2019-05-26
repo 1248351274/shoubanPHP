@@ -1,0 +1,68 @@
+<?php
+namespace app\wshop\controller;
+use think\Controller;
+use think\Session;
+use think\Db;
+class User extends UserBase
+{
+    public function getUserMsg()
+    {
+        $id = $this->login_id;
+        $msg = Db::table('user')
+                    ->join('shop','User_Id=U_Id','left')
+                    ->where('User_Id',$id)
+                    ->find();
+        if($msg){
+            return json_encode(array('result'=>1,'info'=>$msg));
+        }else{
+            return json_encode(array('result'=>0,'info'=>'用户信息获取失败'));
+        }
+    }
+    public function editMsg(){
+        $id = $this->login_id;
+        $rs = Db::table('user')->where('User_Id',$id)->update($_POST);
+        $rss = Db::table('user')->where('User_Id',$id)->where($_POST)->select();
+        if($rss){
+            return json_encode(array('result'=>1,'info'=>'修改成功'));
+        }else{
+            return json_encode(array('result'=>0,'info'=>'修改失败'));
+        }
+    }
+    public function recharge(){
+        $id = $this->login_id;
+        $rs = Db::table('user')->where('User_Id',$id)->setInc('User_Balance',$_POST['price']);
+        if($rs){
+            return json_encode(array('result'=>1,'info'=>'充值成功'));
+        }else{
+            return json_encode(array('result'=>0,'info'=>'充值失败'));
+        }
+    }
+    public function getgoods(){
+        $id = $this->login_id;
+        $rs = Db::table('goods')
+                    ->where('U_Id',$id)
+                    ->select();
+        if($rs){
+            return json_encode(array('result'=>'1','count'=>count($rs),'info'=>$rs));
+        }else{
+            return json_encode(array('result'=>'0','info'=>'暂无商品'));
+        }
+    }
+    public function getgoodsmsg(){
+        $id = $_POST['Goods_Id'];
+        $msg = Db::table('goods')
+                    ->join('goodstype','goods.GT_Id=goodstype.GT_Id')
+                    ->where('Goods_Id',$id)
+                    ->select();
+        foreach($msg as $key => $value){
+            $msg[$key]['img']=Db::table('image')
+                                ->where('G_Id',$value['Goods_Id'])
+                                ->select();
+        }
+        if($msg){
+            return json_encode(array('result'=>'1','info'=>$rs));
+        }else{
+            return json_encode(array('result'=>'0','info'=>'无此商品信息'));
+        }
+    }
+}

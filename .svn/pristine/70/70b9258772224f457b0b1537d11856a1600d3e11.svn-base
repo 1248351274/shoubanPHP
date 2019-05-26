@@ -1,0 +1,151 @@
+<?php
+namespace app\wshop\controller;
+use think\Controller;
+use think\Session;
+use think\Db;
+class Goods extends UserBase
+{
+
+    public function getgoods(){
+        $id = $this->login_id;
+        $msg = Db::table('goods')
+                    ->where('U_Id',$id)
+                    ->select();
+        foreach($msg as $key => $value){
+            $msg[$key]['img']=Db::table('image')
+                                ->where('G_Id',$value['Goods_Id'])
+                                ->select();
+        }
+        if($msg){
+            return json_encode(array('result'=>'1','count'=>count($msg),'info'=>$msg));
+        }else{
+            return json_encode(array('result'=>'0','info'=>'暂无商品'));
+        }
+    }
+    public function getgoodsmsg(){
+        $id = $_POST['Goods_Id'];
+        $msg = Db::table('goods')
+                    ->join('goodstype','goods.GT_Id=goodstype.GT_Id')
+                    ->where('Goods_Id',$id)
+                    ->find();
+
+        $msg['img']=Db::table('image')
+                            ->where('G_Id',$msg['Goods_Id'])
+                            ->select();
+
+        if($msg){
+            return json_encode(array('result'=>'1','info'=>$msg));
+        }else{
+            return json_encode(array('result'=>'0','info'=>'无此商品信息'));
+        }
+    }
+    public function delgood(){
+        $id = $_POST['Goods_Id'];
+        $msg = Db::table('goods')->where('Goods_Id',$id)->find();
+        $shopcart = Db::table('shopcart')->where('G_Id',$id)->select();
+        Db::startTrans();
+        try{
+            if($msg['Goods_Flag']==1){
+                Db::table('shop_goods')->where('G_Id',$id)->delete();
+            }
+            if($shopcart){
+                Db::table('shopcart')->where('G_Id',$id)->delete();
+            }
+            Db::table('goods')->where('Goods_Id',$id)->delete();
+            Db::table('image')->where('G_Id',$id)->delete();
+            
+            return json_encode(array('result'=>1));
+        }catch(\Exception $e){
+            Db::rollback();
+            return json_encode(array('result'=>0));
+        }
+    }
+    public function gettype(){
+        $type = Db::table('goodstype')->select();
+        $a = array();
+        foreach($type as $key => $value){
+            $a[] = $value['GT_Type'];
+        }
+        return json_encode(array('info'=>$a));
+    }
+<<<<<<< .mine
+    public function upload_file(){
+        header('Content-type:text/html;charset=utf-8');
+        $base64_image_content = $_POST['uploadedfile'];
+		if($base64_image_content){
+			$base_img = str_replace('data:image/jpg;base64,', '', $base64_image_content);
+			$path = "public/image/";
+			$prefix='YD_';
+			$output_file = $prefix.time().rand(100,999).'.jpg';
+			$path = $path.$output_file;
+			//  创建将数据流文件写入我们创建的文件内容中
+			$ifp = fopen( $path, "wb" );
+			fwrite( $ifp, base64_decode( $base_img) );
+			fclose( $ifp );
+			echo "文件保存成功";
+		}else{
+			echo "文件保存失败";
+		}
+        //匹配出图片的格式
+        /*if (preg_match('/^(data:\s*image\/(\w+);base64,)/', $base64_image_content, $result)){
+            $type = $result[2];
+            $new_file = "public/image/".date('Ymd',time())."/";
+            if(!file_exists($new_file))
+            {
+                //检查是否有该文件夹，如果没有就创建，并给予最高权限
+                mkdir($new_file, 0777,true);
+            }
+            $new_file = $new_file.time().".{$type}";
+            if (file_put_contents($new_file, base64_decode(str_replace($result[1], '', $base64_image_content)))){
+                echo '新文件保存成功';
+            }else{
+                echo '新文件保存失败';
+            }
+        }else{
+            echo "上传失败";
+        }*/
+		//echo  $base64_image_content;
+    }
+ 
+||||||| .r5505
+ 
+=======
+    public function upimg(){
+        header('Content-type:text/html;charset=utf-8');
+        $base64_image_content = $_POST['uploadedfile'];
+		// if($base64_image_content){
+		// 	$base_img = str_replace('data:image/jpg;base64,', '', $base64_image_content);
+		// 	$path = "public/image/";
+		// 	$prefix='YD_';
+		// 	$output_file = $prefix.time().rand(100,999).'.jpg';
+		// 	$path = $path.$output_file;
+		// 	//  创建将数据流文件写入我们创建的文件内容中
+		// 	$ifp = fopen( $path, "wb" );
+		// 	fwrite( $ifp, base64_decode( $base_img) );
+		// 	fclose( $ifp );
+		// 	echo "文件保存成功";
+		// }else{
+		// 	echo "文件保存失败";
+		// }
+        //匹配出图片的格式
+        if (preg_match('/^(data:\s*image\/(\w+);base64,)/', $base64_image_content, $result)){
+            $type = $result[2];
+            $new_file = "public/image/".date('Ymd',time())."/";
+            if(!file_exists($new_file))
+            {
+                //检查是否有该文件夹，如果没有就创建，并给予最高权限
+                mkdir($new_file, 0777,true);
+            }
+            $new_file = $new_file.time().".{$type}";
+            if (file_put_contents($new_file, base64_decode(str_replace($result[1], '', $base64_image_content)))){
+                echo '新文件保存成功';
+            }else{
+                echo '新文件保存失败';
+            }
+        }else{
+            echo "上传失败";
+        }
+		//echo  $base64_image_content;
+    }
+>>>>>>> .r5523
+}

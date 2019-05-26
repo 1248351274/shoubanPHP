@@ -1,0 +1,52 @@
+<?php
+namespace app\wshop\controller;
+use think\Controller;
+use think\Session;
+use think\Db;
+class Login extends Controller
+{
+    public function login()
+    {
+        $data = $_POST;
+        $data['User_Password'] = md5($data['User_Password']);
+        $rs = Db::table('user')
+                    ->where($data)
+                    ->select();
+        if($rs){
+            $token = rand(1111,9999).time();
+            Db::table('user')->where($data)->update(['User_Status'=>$token]);
+            session::set('login_id',$rs[0]['User_Id']);
+            return json_encode(array('result'=>'1','info'=>$rs[0],'token'=>$token));
+        }else{
+            return json_encode(array('result'=>'0','info'=>'手机号或密码错误'));
+        }
+    }
+    public function register(){
+        $data = $_POST;
+        $data['User_Password'] = md5($data['User_Password']);
+        $rs = Db::table('user')
+                    ->where('User_Tel',$data['User_Tel'])
+                    ->select();
+        if(!$rs){
+            $inser = Db::table('user')
+                        ->insert($data);
+            if($inser){
+                $token = rand(1111,9999).time();
+                $msg = Db::table('user')->where($data)->select();
+                Db::table('user')->where($data)->update(['User_Status'=>$token]);
+                session::set('login_id',$msg[0]['User_Id']);
+                return json_encode(array('result'=>'1','info'=>$msg[0],'token'=>$token));
+            }else{
+                return json_encode(array('result'=>'0','info'=>'注册失败'));
+            }
+        }else{
+            return json_encode(array('result'=>'0','info'=>'手机号已被注册'));
+        }
+    }
+    public function login_out(){
+        $loginid = Session::get('login_id');
+        Db::table('user')->where('User_Id',$loginid)->update(['User_Status'=>'0']);
+        Session::delete('login_id');
+        return json_encode(array('info'=>'退出成功'));
+    }
+}

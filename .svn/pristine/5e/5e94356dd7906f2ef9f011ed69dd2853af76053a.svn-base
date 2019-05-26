@@ -1,0 +1,107 @@
+<?php
+namespace app\index\controller;
+use \think\Controller;
+use \think\Db;
+use \think\Session;
+class Recorder extends Sesspar
+{
+    public function index()
+    {
+    	$data = array();
+        if(isset($_GET['logisname']) && $_GET['logisname']!=''){
+            // $data['Logis_Name'] = array('like',"%".$_GET['logisname']."%");
+            $data['logisname'] = $_GET['logisname'];
+            $this->assign('logisname',$_GET['logisname']);
+        }
+        if(isset($_GET['start'])){
+            if($_GET['start']!=''){
+                $start = strtotime($_GET['start']);
+                $this->assign('start',$_GET['start']);
+            }else{
+                $start = 0;
+            }
+        }else{
+            $start = strtotime(date('Y-m-d'));
+            $this->assign('start',date('Y-m-d'));
+        }
+        if(isset($_GET['end'])){
+            if($_GET['end']!=''){
+                $end = strtotime($_GET['end'])+86399;
+                $this->assign('end',$_GET['end']);
+            }else{
+                $end = time();
+            }
+        }else{
+            $end = time();
+            $this->assign('end',date('Y-m-d'));
+        }
+
+
+        $dataz['Order_BaseTime'] = array('between',"$start,$end");
+        $datas['Order_BaseTime'] = array('between',"$start,$end");
+        $dataz['Order_Type'] = 1;
+        $datas['Order_Type'] = 2;
+        $resdatabase = Db::query('show databases;');
+        $i = 0;
+        foreach ($resdatabase as $key => $value) {
+            if(substr($value['Database'], 0,2)=='yh' && $value['Database']!='yhwl'){
+                $con = Db::connect("mysql://root:root@localhost:3306/".$value['Database']."#utf8");
+                $list[$i]['zx'] = $con->table('order_base')
+                                    ->where($dataz)
+                                    ->count();
+                $list[$i]['ln'] = Db::table('logistic')
+                                    ->where('Logis_Code',$value['Database'])
+                                    ->value('Logis_Name');
+                $list[$i]['sd'] = $con->table('order_base')
+                                    ->where($datas)
+                                    ->count();
+                $i++;
+            }
+        }
+        if(isset($data['logisname'])){
+            $j = 0;
+            $lists = array();
+            foreach ($list as $key => $value) {
+                if(strpos($value['ln'],$data['logisname'])!==false){
+                    $lists[$j]=$value;
+                }
+            }
+        }else{
+            $lists = $list;
+        }
+        
+    	$this->assign('list',$lists);
+		return $this->fetch();
+    }
+    public function index1(){
+        $data = array();
+        if(isset($_GET['logisname']) && $_GET['logisname']!=''){
+            $data['Logis_Name'] = array('like',"%".$_GET['logisname']."%");
+            $this->assign('logisname',$_GET['logisname']);
+        }
+        if(isset($_GET['start'])){
+            if($_GET['start']!=''){
+                $start = strtotime($_GET['start']);
+                $this->assign('start',$_GET['start']);
+            }else{
+                $start = 0;
+            }
+        }else{
+            $start = strtotime(date('Y-m-d'));
+            $this->assign('start',date('Y-m-d'));
+        }
+        if(isset($_GET['end'])){
+            if($_GET['end']!=''){
+                $end = strtotime($_GET['end'])+86399;
+                $this->assign('end',$_GET['end']);
+            }else{
+                $end = time();
+            }
+        }else{
+            $end = time();
+            $this->assign('end',date('Y-m-d'));
+        }
+        $rs = Db::table('logistic');
+    }
+
+}

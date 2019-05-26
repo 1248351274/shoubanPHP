@@ -1,0 +1,73 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>合财保后台登录</title>
+    <meta name="renderer" content="webkit|ie-comp|ie-stand">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width,user-scalable=yes, minimum-scale=0.4, initial-scale=0.8,target-densitydpi=low-dpi" />
+    <meta http-equiv="Cache-Control" content="no-siteapp" />
+    <link rel="shortcut icon" href="/favicon.ico" type="__IMG__/x-icon" />
+    <link rel="stylesheet" href="__CSS__/font.css">
+    <link rel="stylesheet" href="__CSS__/xadmin.css">
+    <script type="text/javascript" src="__JS__/jquery.min.js"></script>
+    <script src="__LIB__/layui/layui.js" charset="utf-8"></script>
+    <script type="text/javascript" src="__JS__/xadmin.js"></script>
+    <script type="text/javascript" src="__JS__/jquery.form.js"></script>
+
+</head>
+<body>
+        <div class="x-body">
+            <form class="layui-form" id="form">
+                <div class="layui-form-item">
+                    <label for="BXCom_Name" class="layui-form-label">
+                        <span class="x-red">*</span>保险公司名称
+                    </label>
+                    <div class="layui-input-inline">
+                        <input type="text" id="BXCom_Name" name="BXCom_Name" value="{$msg.BXCom_Name}" required="" 
+                        autocomplete="off" class="layui-input">
+                    </div>
+                    <input type="hidden" name="BXCom_Id" value="{$msg.BXCom_Id}">
+                </div>
+                <div class="layui-form-item layui-form-text">
+                    <label class="layui-form-label">公司简介</label>
+                    <div class="layui-input-block">
+                        <textarea placeholder="请输入内容" id='BXCom_Remarks' name="BXCom_Remarks" class="layui-textarea">{$msg.BXCom_Remarks}</textarea>
+                    </div>
+                </div>
+                <div class="layui-form-item">
+                    <label for="L_repass" class="layui-form-label">
+                    </label>
+                    <button  class="layui-btn" id = 'addbtn'>
+                        修改
+                    </button>
+                </div>
+            </form>
+        </div>
+<script>
+    $('#addbtn').click(function(){
+        if($('#BXCom_Name').val()==''){
+            layer.msg('必填项不能为空');
+            return false;
+        }
+        
+        $.ajax({
+            type:"POST",
+            dataType:"json",
+            url:"{:url('index/company/subcomedit')}",
+            data:$('#form').serialize(),
+            success:function(data){
+                if(data==1){
+                    parent.location.reload();
+                }else{
+                    layer.msg('修改失败')
+                }
+            },
+            error:function(){
+                layer.msg('修改失败！')
+            }
+        })
+    })
+</script>
+</body>
+</html>

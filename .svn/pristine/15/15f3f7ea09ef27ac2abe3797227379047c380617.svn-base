@@ -1,0 +1,101 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>后台登录-X-admin1.1</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="shortcut icon" href="/favicon.ico" type="__IMG__/x-icon" />
+    <link rel="stylesheet" href="__CSS__/font.css">
+    <link rel="stylesheet" href="__CSS__/xadmin.css">
+    <link rel="stylesheet" href="__CSS__/swiper.min.css">
+    <script type="text/javascript" src="__JS__/jquery.min.js"></script>
+    <script type="text/javascript" src="__JS__/swiper.jquery.min.js"></script>
+    <script src="__LIB__/layui/layui.js" charset="utf-8"></script>
+    <script type="text/javascript" src="__JS__/xadmin.js"></script>
+
+</head>
+<body>
+    <!-- 中部开始 -->
+    <div class="wrapper">
+        <!-- 右侧主体开始 -->
+        <div class="page-content">
+          <div class="content">
+            <!-- 右侧内容框架，更改从这里开始 -->
+            <form class="layui-form" id="form">
+                <div class="layui-form-item">
+                    <label class="layui-form-label">物流公司</label>
+                    <div class="layui-input-block">
+                        <select name="Adv_LogCode" id='Adv_LogCode' lay-filter="aihao">
+                            <option value="">请选择物流公司</option>
+                            {volist name="list" id="vo"}
+                            <option value="{$vo.Logis_Code}">{$vo.Logis_Name}</option>
+                            {/volist}
+                        </select>
+                    </div>
+                </div>
+                <div class="layui-form-item layui-form-text">
+                    <label class="layui-form-label">广告位1</label>
+                    <div class="layui-input-block">
+                        <textarea placeholder="请输入内容" name="Adv_Content1" class="layui-textarea"></textarea>
+                    </div>
+                </div>
+                <div class="layui-form-item layui-form-text">
+                    <label class="layui-form-label">广告位2</label>
+                    <div class="layui-input-block">
+                        <textarea placeholder="请输入内容" name="Adv_Content2" class="layui-textarea"></textarea>
+                    </div>
+                </div>
+                <div class="layui-form-item layui-form-text">
+                    <label class="layui-form-label">广告位3</label>
+                    <div class="layui-input-block">
+                        <textarea placeholder="请输入内容" name="Adv_Content3" class="layui-textarea"></textarea>
+                    </div>
+                </div>
+                <div class="layui-form-item layui-form-text">
+                    <label class="layui-form-label">广告位4</label>
+                    <div class="layui-input-block">
+                        <textarea placeholder="请输入内容" name="Adv_Content4" class="layui-textarea"></textarea>
+                    </div>
+                </div>
+                
+                <div class="layui-form-item">
+                    <label for="L_repass" class="layui-form-label">
+                    </label>
+                    <button  class="layui-btn" lay-filter="save" lay-submit="" id="add_btn">
+                        添加
+                    </button>
+                </div>
+            </form>
+            <!-- 右侧内容框架，更改从这里结束 -->
+          </div>
+        </div>
+        <!-- 右侧主体结束 -->
+    </div>
+    <!-- 中部结束 -->
+<script>
+    $('#add_btn').click(function(){
+        if($('#Adv_LogCode').val()==""){
+            layer.msg('请选择物流公司');
+            return false;
+        }
+        
+        $.ajax({
+            type:"POST",
+            dataType:"json",
+            url:"{:url('index/adver/add')}",
+            data:$('#form').serialize(),
+            success:function(data){
+                if(data==1){
+                    parent.location.reload();
+                }else{
+                    layer.msg('添加失败')
+                }
+            },
+            error:function(){
+                layer.msg('添加失败！')
+            }
+        })
+    })
+</script>
+</body>
+</html>

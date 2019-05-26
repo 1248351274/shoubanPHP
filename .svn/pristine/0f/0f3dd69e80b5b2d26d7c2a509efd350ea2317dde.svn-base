@@ -1,0 +1,90 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>后台登录-X-admin1.1</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="shortcut icon" href="/favicon.ico" type="__IMG__/x-icon" />
+    <link rel="stylesheet" href="__CSS__/font.css">
+    <link rel="stylesheet" href="__CSS__/xadmin.css">
+    <link rel="stylesheet" href="__CSS__/swiper.min.css">
+    <script type="text/javascript" src="__JS__/jquery.min.js"></script>
+    <script type="text/javascript" src="__JS__/swiper.jquery.min.js"></script>
+    <script src="__LIB__/layui/layui.js" charset="utf-8"></script>
+    <script type="text/javascript" src="__JS__/xadmin.js"></script>
+
+</head>
+<body>
+    <!-- 中部开始 -->
+    <div class="wrapper">
+        <!-- 右侧主体开始 -->
+        <div class="page-content">
+          <div class="content">
+            <!-- 右侧内容框架，更改从这里开始 -->
+            <table class='layui-table'>
+                <tr>
+                    <td>运单号</td>
+                    <td>{$det['Order_BillID']}</td>
+                </tr>
+                {if condition="$det['Order_LogisStates']=='待接单' || $det['Order_LogisStates']=='共享中'"}
+                <tr>
+                    <td>运单验证码</td>
+                    <td>{$det['Order_Code']}</td>
+                </tr>
+                {/if}
+                    <tr>
+                        <td>运单状态</td>
+                        <td>{$det['Order_LogisStates']}</td>
+                    </tr>
+                    <tr>
+                        <td>承运物流</td>
+                        <td>{$det['Order_LogisName']}</td>
+                    </tr>
+                    {if condition="$det['Order_LogisStates']=='待接单' || $det['Order_LogisStates']=='共享中'"}
+                    <tr>
+                        <td>发货人</td>
+                        <td>{$det['Order_Consignor']} , {$det['Order_ConsignorTel']} , {$det['Order_Send']}</td>
+                    </tr>
+                    <tr>
+                        <td>收货人</td>
+                        <td>{$det['Order_Receive']} , {$det['Receive_LinkTel']} , {$det['Order_End']}</td>
+                    </tr>
+                    <tr>
+                        <td>托寄物</td>
+                        <td>{$det['Order_Goods']} , {$det['Order_Num']}件</td>
+                    </tr>
+                    {else /}
+                    <tr>
+                        <td>发货人</td>
+                        <td>{$det['Order_Consignor']} , {$det['Order_ConTel']} , {$det['Order_Send']}</td>
+                    </tr>
+                    <tr>
+                        <td>收货人</td>
+                        <td>{$det['Order_Receive']} , {$det['Receive_LinkTel']} , {$det['Order_End']}</td>
+                    </tr>
+                    <tr>
+                        <td>托寄物</td>
+                        <td>{$det['Order_Goods']} , {$det['Order_Num']}件</td>
+                    </tr>
+                    
+                    <tr>
+                        <td>运单轨迹</td>
+                        <td>
+                            {volist name="guiji" id="vo"}
+                                {$vo.Record_Rotime|date="Y-m-d H:i:s",###}  ：  {$vo.Record_Content}<br>
+                            {/volist}
+                        </td>
+                    </tr>
+                    {/if}
+                    
+                
+            </table>
+            <!-- 右侧内容框架，更改从这里结束 -->
+          </div>
+        </div>
+        <!-- 右侧主体结束 -->
+    </div>
+    <!-- 中部结束 -->
+
+</body>
+</html>

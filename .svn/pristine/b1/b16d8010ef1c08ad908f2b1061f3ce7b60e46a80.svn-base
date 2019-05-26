@@ -1,0 +1,93 @@
+<?php
+namespace app\index\controller;
+use \think\Controller;
+use \think\Db;
+use \think\Session;
+class Apply extends Sesspar
+{
+    public function index()
+    {	
+        if(isset($_GET['username']) && $_GET['username']!=''){
+            $data['Logis_Name'] = array('like',"%".$_GET['username']."%");
+            $this->assign('username',$_GET['username']);
+        }
+        if(isset($_GET['start']) && $_GET['start']!=''){
+            $start = strtotime($_GET['start']);
+            $this->assign('start',$_GET['start']);
+        }else{
+            $start = 0;
+        }
+        if(isset($_GET['end']) && $_GET['end']!=''){
+            $end = strtotime($_GET['end'])+86399;
+            $this->assign('end',$_GET['end']);
+        }else{
+            $end = time();
+        }
+        $data['ULUser_RegTime'] = array('between',"$start,$end");
+    
+        $data['ULUser_TmsStatus'] = 1;
+        $data['Logis_Istms'] = 1;
+    	$rs = Db::table('uluser')
+                ->join('logistic','ULUser_Code = Logis_Code')
+    			->where($data)
+    			->paginate(10,false,['query'=>request()->param()]);	
+        $count = Db::table('uluser')
+                ->join('logistic','ULUser_Code = Logis_Code')
+                ->where($data)
+                ->count(); 
+        $this->assign('count',$count);
+    	$this->assign('list',$rs);
+		return $this->fetch();
+    }
+    public function add_show(){
+        return $this->fetch();
+    }
+    public function add(){
+        $data = $_POST;
+        $admin['ULUser_TmsStatus']="1";
+        $admin['ULUser_Type']="2";
+        $admin['ULUser_Code']='yh'.rand(1111,9999).time();
+        $admin['ULUser_ResidualAmount']=200;
+        $admin['ULUser_RegTime']=time();
+        $admin['ULUser_Name']=$data['tel'];
+        $admin['ULUser_Mobile']=$data['tel'];
+        $admin['ULUser_Loname']=$data['linker'];
+        $admin['ULUser_Pwd'] = md5(md5("123456").$data['tel']);
+        $cons=array();
+        $cons['Logis_Code']=$admin['ULUser_Code'];
+        $cons['Logis_LinkTel']=$data['tel'];
+        $cons['Logis_Linker']=$data['linker'];
+        $cons['Logis_Name']=$data['name'];
+        $cons['Logis_IsFlag']="1";
+        $cons['Logis_Istms']="1";
+        $result=Db::table('uluser')->where("ULUser_Name",$admin['ULUser_Name'])->select();
+        if($result){
+            echo 2;
+        }else{
+            Db::startTrans();
+            try{
+                Db::table('uluser')->insert($admin);
+                Db::table('logistic')->insert($cons);
+                Db::commit();
+                echo 1;
+            }catch(\Exception $e){
+                $db->rollback();
+                echo 0;
+            }
+        }
+    }
+    public function del(){
+        $data = $_POST;
+        Db::startTrans();
+        try{
+            Db::table('uluser')->where("ULUser_Code",$data['Logis_Code'])->delete();
+            Db::table('logistic')->where("Logis_Code",$data['Logis_Code'])->delete();
+            Db::commit();
+            echo 1;
+        }catch(\Exception $e){
+            $db->rollback();
+            echo 0;
+        }
+        
+    }
+}

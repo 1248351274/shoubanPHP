@@ -1,0 +1,115 @@
+<?php
+namespace app\index\controller;
+use \think\Controller;
+use \think\Db;
+use \think\Session;
+class Adver extends Sesspar
+{
+    public function index()
+    {
+    	$data = array();
+
+        if(isset($_GET['logisname']) && $_GET['logisname']!=''){
+            $data['Logis_Name'] = array('like',"%".$_GET['logisname']."%");
+            $this->assign('logisname',$_GET['logisname']);
+        }
+        if(isset($_GET['start']) && $_GET['start']!=''){
+            $start = strtotime($_GET['start']);
+            $this->assign('start',$_GET['start']);
+        }else{
+            $start = 0;
+        }
+        if(isset($_GET['end']) && $_GET['end']!=''){
+            $end = strtotime($_GET['end'])+86399;
+            $this->assign('end',$_GET['end']);
+        }else{
+            $end = time();
+        }
+        $data['Adv_UpTime'] = array('between',"$start,$end");
+
+    	$rs = Db::table('appadv')
+    			->join('logistic','Adv_LogCode = Logis_Code')
+    			->where($data)
+    			->paginate(10,false,['query'=>request()->param()]);
+    	$count = Db::table('appadv')
+    			->count();
+    	$this->assign('count',$count);
+    	$this->assign('list',$rs);
+		return $this->fetch();
+    }
+    public function edit_show($id){
+    	$rs = Db::table('appadv')
+                ->join('logistic','Adv_LogCode = Logis_Code')
+                ->where('Adv_Id',$id)
+                ->find();
+        $this->assign('msg',$rs);
+        return $this->fetch();
+    }
+    public function edit(){
+    	$data = $_POST;
+    	$data['Adv_UpTime'] = time();
+    	$rs = Db::table('appadv')->where('Adv_Id',$data['Adv_Id'])->update($data);
+    	if($rs){
+    		echo 1;
+    	}else{
+    		echo 0;
+    	}
+    }
+    public function add_show(){
+    	$rs = Db::table('logistic')->where('Logis_Isptn',1)->select();
+    	$this->assign('list',$rs);
+    	return $this->fetch();
+    }
+    public function add(){
+    	$data = $_POST;
+    	$data['Adv_UpTime'] = time();
+    	$rs1 = Db::table('appadv')->where('Adv_LogCode',$data['Adv_LogCode'])->select();
+    	if($rs1){
+    		$rs2 = Db::table('appadv')->where('Adv_LogCode',$data['Adv_LogCode'])->update($data);
+    	}else{
+    		$rs2 = Db::table('appadv')->insert($data);
+    	}
+        
+    	if($rs2){
+    		echo 1;
+    	}else{
+    		echo 0;
+    	}
+    }
+    public function upload(){
+        $file = request()->file('upimg');
+        $info = $file->validate(['ext'=>'jpg,png,gif,jpeg'])->move(ROOT_PATH . 'public' . DS . 'uploads');
+        $src = '/a/public/uploads/'.$info->getSaveName();
+        //$src = '/yhwl/a/public/uploads/'.$info->getSaveName();
+        if($info){
+
+            $data['status'] = 1;
+            $data['src'] = $src;  
+            $data['content'] = "上传成功";  
+            return $data; 
+        }else{
+
+            $data['status'] = 0;  
+            $data['content'] = "上传失败";  
+            return $data; 
+        }
+
+    }
+    public function delimg(){
+        $imgpath = $_POST['imgpath'];
+        if(unlink(strstr($imgpath,'public'))){
+            echo 1;
+        }else{
+            echo 0;
+        }
+    }
+    public function delete(){
+        $id = $_POST['id'];
+        $rs = Db::table('appadv')->where('Adv_Id',$id)->delete();
+        if($rs){
+            echo 1;
+        }else{
+            echo 0;
+        }
+    }
+}

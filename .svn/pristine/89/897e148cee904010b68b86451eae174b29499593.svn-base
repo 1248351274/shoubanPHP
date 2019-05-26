@@ -1,0 +1,10 @@
+<?php if (!defined('THINK_PATH')) exit(); /*a:1:{s:87:"D:\Program Files\phpstudy\WWW\thinkphp_5.0_full/application/index\view\index\hello.html";i:1513690261;}*/ ?>
+<html>
+<head>
+<title>hello <?php echo $name; ?></title>
+</head>
+<body>
+    hello, <?php echo $name; ?>!
+    <?php echo $result['Id']; ?>--<?php echo $result['Name']; ?>
+</body>
+</html>

@@ -1,0 +1,758 @@
+[ 2018-04-18T22:27:11+08:00 ] 127.0.0.1 127.0.0.1 GET /wxshop/index.php/wshop/index/hello
+[ log ] 127.0.0.1/wxshop/index.php/wshop/index/hello [运行时间：1.306432s][吞吐率：0.77req/s] [内存消耗：2,061.47kb] [文件加载：47]
+[ info ] [ ROUTE ] array (
+  'type' => 'module',
+  'module' => 
+  array (
+    0 => 'wshop',
+    1 => 'index',
+    2 => 'hello',
+  ),
+)
+[ info ] [ HEADER ] array (
+  'host' => '127.0.0.1',
+  'connection' => 'keep-alive',
+  'upgrade-insecure-requests' => '1',
+  'user-agent' => 'Mozilla/5.0 (Linux; Android 5.0; SM-G900P Build/LRX21T) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/65.0.3325.181 Mobile Safari/537.36',
+  'accept' => 'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8',
+  'accept-encoding' => 'gzip, deflate, br',
+  'accept-language' => 'zh-CN,zh;q=0.9,en;q=0.8',
+  'cookie' => 'Hm_lvt_b393d153aeb26b46e9431fabaf0f6190=1523330954',
+)
+[ info ] [ PARAM ] array (
+)
+[ info ] [ RUN ] Method [ <user> public method hello ] {
+  @@ C:\Users\Administrator\Desktop\work\wxshop\application\wshop\controller\Index.php 7 - 12
+}
+
+[ info ] [ DB ] INIT mysql
+[ info ] [ LOG ] INIT File
+[ sql ] [ DB ] CONNECT:[ UseTime:0.332118s ] mysql:dbname=wshop;host=127.0.0.1;charset=utf8
+[ sql ] [ SQL ] SHOW COLUMNS FROM `user` [ RunTime:0.206676s ]
+[ sql ] [ SQL ] SELECT * FROM `user`  [ RunTime:0.000621s ]
+
+---------------------------------------------------------------
+[ 2018-04-18T22:49:48+08:00 ] 127.0.0.1 127.0.0.1 GET /wxshop/index.php/wshop/index/getType
+[ log ] 127.0.0.1/wxshop/index.php/wshop/index/getType [运行时间：0.229930s][吞吐率：4.35req/s] [内存消耗：2,053.29kb] [文件加载：46]
+[ info ] [ ROUTE ] array (
+  'type' => 'module',
+  'module' => 
+  array (
+    0 => 'wshop',
+    1 => 'index',
+    2 => 'getType',
+  ),
+)
+[ info ] [ HEADER ] array (
+  'host' => '127.0.0.1',
+  'connection' => 'keep-alive',
+  'upgrade-insecure-requests' => '1',
+  'user-agent' => 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/65.0.3325.181 Safari/537.36',
+  'accept' => 'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8',
+  'accept-encoding' => 'gzip, deflate, br',
+  'accept-language' => 'zh-CN,zh;q=0.9,en;q=0.8',
+  'cookie' => 'Hm_lvt_b393d153aeb26b46e9431fabaf0f6190=1523330954',
+)
+[ info ] [ PARAM ] array (
+)
+[ info ] [ RUN ] Method [ <user> public method getType ] {
+  @@ C:\Users\Administrator\Desktop\work\wxshop\application\wshop\controller\Index.php 13 - 21
+}
+
+[ info ] [ DB ] INIT mysql
+[ info ] [ LOG ] INIT File
+[ sql ] [ DB ] CONNECT:[ UseTime:0.002635s ] mysql:dbname=wshop;host=127.0.0.1;charset=utf8
+[ sql ] [ SQL ] SHOW COLUMNS FROM `goodstype` [ RunTime:0.097381s ]
+[ sql ] [ SQL ] SELECT * FROM `goodstype`  [ RunTime:0.000457s ]
+
+---------------------------------------------------------------
+[ 2018-04-18T23:06:23+08:00 ] 127.0.0.1 127.0.0.1 GET /wxshop/index.php/index/index/getGoods
+[ log ] 127.0.0.1/wxshop/index.php/index/index/getGoods [运行时间：0.276761s][吞吐率：3.61req/s] [内存消耗：1,270.47kb] [文件加载：38]
+[ info ] [ ROUTE ] array (
+  'type' => 'module',
+  'module' => 
+  array (
+    0 => 'index',
+    1 => 'index',
+    2 => 'getGoods',
+  ),
+)
+[ info ] [ HEADER ] array (
+  'host' => '127.0.0.1',
+  'connection' => 'keep-alive',
+  'upgrade-insecure-requests' => '1',
+  'user-agent' => 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/65.0.3325.181 Safari/537.36',
+  'accept' => 'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8',
+  'accept-encoding' => 'gzip, deflate, br',
+  'accept-language' => 'zh-CN,zh;q=0.9,en;q=0.8',
+  'cookie' => 'Hm_lvt_b393d153aeb26b46e9431fabaf0f6190=1523330954',
+)
+[ info ] [ PARAM ] array (
+)
+[ info ] [ LANG ] C:\Users\Administrator\Desktop\work\wxshop\thinkphp\lang\zh-cn.php
+[ info ] [ LOG ] INIT File
+
+---------------------------------------------------------------
+[ 2018-04-18T23:06:33+08:00 ] 127.0.0.1 127.0.0.1 GET /wxshop/index.php/index/getGoods
+[ log ] 127.0.0.1/wxshop/index.php/index/getGoods [运行时间：0.040700s][吞吐率：24.57req/s] [内存消耗：1,269.91kb] [文件加载：38]
+[ info ] [ ROUTE ] array (
+  'type' => 'module',
+  'module' => 
+  array (
+    0 => 'index',
+    1 => 'getGoods',
+    2 => NULL,
+  ),
+)
+[ info ] [ HEADER ] array (
+  'host' => '127.0.0.1',
+  'connection' => 'keep-alive',
+  'upgrade-insecure-requests' => '1',
+  'user-agent' => 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/65.0.3325.181 Safari/537.36',
+  'accept' => 'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8',
+  'accept-encoding' => 'gzip, deflate, br',
+  'accept-language' => 'zh-CN,zh;q=0.9,en;q=0.8',
+  'cookie' => 'Hm_lvt_b393d153aeb26b46e9431fabaf0f6190=1523330954; think_var=zh-cn',
+)
+[ info ] [ PARAM ] array (
+)
+[ info ] [ LANG ] C:\Users\Administrator\Desktop\work\wxshop\thinkphp\lang\zh-cn.php
+[ info ] [ LOG ] INIT File
+
+---------------------------------------------------------------
+[ 2018-04-18T23:06:43+08:00 ] 127.0.0.1 127.0.0.1 GET /wxshop/index.php/wshop/getGoods
+[ log ] 127.0.0.1/wxshop/index.php/wshop/getGoods [运行时间：0.035594s][吞吐率：28.09req/s] [内存消耗：1,270.45kb] [文件加载：38]
+[ info ] [ ROUTE ] array (
+  'type' => 'module',
+  'module' => 
+  array (
+    0 => 'wshop',
+    1 => 'getGoods',
+    2 => NULL,
+  ),
+)
+[ info ] [ HEADER ] array (
+  'host' => '127.0.0.1',
+  'connection' => 'keep-alive',
+  'upgrade-insecure-requests' => '1',
+  'user-agent' => 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/65.0.3325.181 Safari/537.36',
+  'accept' => 'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8',
+  'accept-encoding' => 'gzip, deflate, br',
+  'accept-language' => 'zh-CN,zh;q=0.9,en;q=0.8',
+  'cookie' => 'Hm_lvt_b393d153aeb26b46e9431fabaf0f6190=1523330954; think_var=zh-cn',
+)
+[ info ] [ PARAM ] array (
+)
+[ info ] [ LANG ] C:\Users\Administrator\Desktop\work\wxshop\thinkphp\lang\zh-cn.php
+[ info ] [ LOG ] INIT File
+
+---------------------------------------------------------------
+[ 2018-04-18T23:06:51+08:00 ] 127.0.0.1 127.0.0.1 GET /wxshop/index.php/wshop/index/getGoods
+[ log ] 127.0.0.1/wxshop/index.php/wshop/index/getGoods [运行时间：0.188165s][吞吐率：5.31req/s] [内存消耗：2,161.01kb] [文件加载：53]
+[ info ] [ ROUTE ] array (
+  'type' => 'module',
+  'module' => 
+  array (
+    0 => 'wshop',
+    1 => 'index',
+    2 => 'getGoods',
+  ),
+)
+[ info ] [ HEADER ] array (
+  'host' => '127.0.0.1',
+  'connection' => 'keep-alive',
+  'upgrade-insecure-requests' => '1',
+  'user-agent' => 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/65.0.3325.181 Safari/537.36',
+  'accept' => 'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8',
+  'accept-encoding' => 'gzip, deflate, br',
+  'accept-language' => 'zh-CN,zh;q=0.9,en;q=0.8',
+  'cookie' => 'Hm_lvt_b393d153aeb26b46e9431fabaf0f6190=1523330954; think_var=zh-cn',
+)
+[ info ] [ PARAM ] array (
+)
+[ info ] [ RUN ] Method [ <user> public method getGoods ] {
+  @@ C:\Users\Administrator\Desktop\work\wxshop\application\wshop\controller\Index.php 22 - 33
+}
+
+[ info ] [ DB ] INIT mysql
+[ info ] [ LANG ] C:\Users\Administrator\Desktop\work\wxshop\thinkphp\lang\zh-cn.php
+[ info ] [ LANG ] C:\Users\Administrator\Desktop\work\wxshop\thinkphp\lang\zh-cn.php
+[ info ] [ LOG ] INIT File
+[ sql ] [ DB ] CONNECT:[ UseTime:0.003295s ] mysql:dbname=wshop;host=127.0.0.1;charset=utf8
+[ sql ] [ SQL ] SHOW COLUMNS FROM `goods` [ RunTime:0.051541s ]
+[ sql ] [ SQL ] SELECT * FROM goods g INNER JOIN goodstype t ON g.GT_Id = t.GT_Id INNER JOIN image i ON g.Goods_Id = G_Id   [ RunTime:0.015890s ]
+[ error ] [8]未定义变量: type[C:\Users\Administrator\Desktop\work\wxshop\application\wshop\controller\Index.php:28]
+
+---------------------------------------------------------------
+[ 2018-04-18T23:07:06+08:00 ] 127.0.0.1 127.0.0.1 GET /wxshop/index.php/wshop/index/getGoods
+[ log ] 127.0.0.1/wxshop/index.php/wshop/index/getGoods [运行时间：0.144848s][吞吐率：6.90req/s] [内存消耗：2,060.38kb] [文件加载：46]
+[ info ] [ ROUTE ] array (
+  'type' => 'module',
+  'module' => 
+  array (
+    0 => 'wshop',
+    1 => 'index',
+    2 => 'getGoods',
+  ),
+)
+[ info ] [ HEADER ] array (
+  'host' => '127.0.0.1',
+  'connection' => 'keep-alive',
+  'cache-control' => 'max-age=0',
+  'upgrade-insecure-requests' => '1',
+  'user-agent' => 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/65.0.3325.181 Safari/537.36',
+  'accept' => 'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8',
+  'accept-encoding' => 'gzip, deflate, br',
+  'accept-language' => 'zh-CN,zh;q=0.9,en;q=0.8',
+  'cookie' => 'Hm_lvt_b393d153aeb26b46e9431fabaf0f6190=1523330954; think_var=zh-cn',
+)
+[ info ] [ PARAM ] array (
+)
+[ info ] [ RUN ] Method [ <user> public method getGoods ] {
+  @@ C:\Users\Administrator\Desktop\work\wxshop\application\wshop\controller\Index.php 22 - 33
+}
+
+[ info ] [ DB ] INIT mysql
+[ info ] [ LOG ] INIT File
+[ sql ] [ DB ] CONNECT:[ UseTime:0.003709s ] mysql:dbname=wshop;host=127.0.0.1;charset=utf8
+[ sql ] [ SQL ] SHOW COLUMNS FROM `goods` [ RunTime:0.089271s ]
+[ sql ] [ SQL ] SELECT * FROM goods g INNER JOIN goodstype t ON g.GT_Id = t.GT_Id INNER JOIN image i ON g.Goods_Id = G_Id   [ RunTime:0.000566s ]
+
+---------------------------------------------------------------
+[ 2018-04-18T23:07:21+08:00 ] 127.0.0.1 127.0.0.1 GET /wxshop/index.php/wshop/index/getGoods
+[ log ] 127.0.0.1/wxshop/index.php/wshop/index/getGoods [运行时间：0.061164s][吞吐率：16.35req/s] [内存消耗：2,061.67kb] [文件加载：46]
+[ info ] [ ROUTE ] array (
+  'type' => 'module',
+  'module' => 
+  array (
+    0 => 'wshop',
+    1 => 'index',
+    2 => 'getGoods',
+  ),
+)
+[ info ] [ HEADER ] array (
+  'host' => '127.0.0.1',
+  'connection' => 'keep-alive',
+  'cache-control' => 'max-age=0',
+  'upgrade-insecure-requests' => '1',
+  'user-agent' => 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/65.0.3325.181 Safari/537.36',
+  'accept' => 'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8',
+  'accept-encoding' => 'gzip, deflate, br',
+  'accept-language' => 'zh-CN,zh;q=0.9,en;q=0.8',
+  'cookie' => 'Hm_lvt_b393d153aeb26b46e9431fabaf0f6190=1523330954; think_var=zh-cn',
+)
+[ info ] [ PARAM ] array (
+)
+[ info ] [ RUN ] Method [ <user> public method getGoods ] {
+  @@ C:\Users\Administrator\Desktop\work\wxshop\application\wshop\controller\Index.php 22 - 33
+}
+
+[ info ] [ DB ] INIT mysql
+[ info ] [ LOG ] INIT File
+[ sql ] [ DB ] CONNECT:[ UseTime:0.002194s ] mysql:dbname=wshop;host=127.0.0.1;charset=utf8
+[ sql ] [ SQL ] SHOW COLUMNS FROM `goods` [ RunTime:0.011012s ]
+[ sql ] [ SQL ] SELECT * FROM goods g INNER JOIN goodstype t ON g.GT_Id = t.GT_Id   [ RunTime:0.000611s ]
+
+---------------------------------------------------------------
+[ 2018-04-18T23:10:23+08:00 ] 127.0.0.1 127.0.0.1 GET /wxshop/index.php/wshop/index/getGoods
+[ log ] 127.0.0.1/wxshop/index.php/wshop/index/getGoods [运行时间：0.111832s][吞吐率：8.94req/s] [内存消耗：2,064.25kb] [文件加载：46]
+[ info ] [ ROUTE ] array (
+  'type' => 'module',
+  'module' => 
+  array (
+    0 => 'wshop',
+    1 => 'index',
+    2 => 'getGoods',
+  ),
+)
+[ info ] [ HEADER ] array (
+  'host' => '127.0.0.1',
+  'connection' => 'keep-alive',
+  'cache-control' => 'max-age=0',
+  'upgrade-insecure-requests' => '1',
+  'user-agent' => 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/65.0.3325.181 Safari/537.36',
+  'accept' => 'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8',
+  'accept-encoding' => 'gzip, deflate, br',
+  'accept-language' => 'zh-CN,zh;q=0.9,en;q=0.8',
+  'cookie' => 'Hm_lvt_b393d153aeb26b46e9431fabaf0f6190=1523330954; think_var=zh-cn',
+)
+[ info ] [ PARAM ] array (
+)
+[ info ] [ RUN ] Method [ <user> public method getGoods ] {
+  @@ C:\Users\Administrator\Desktop\work\wxshop\application\wshop\controller\Index.php 22 - 33
+}
+
+[ info ] [ DB ] INIT mysql
+[ info ] [ LOG ] INIT File
+[ sql ] [ DB ] CONNECT:[ UseTime:0.002149s ] mysql:dbname=wshop;host=127.0.0.1;charset=utf8
+[ sql ] [ SQL ] SHOW COLUMNS FROM `goods` [ RunTime:0.010386s ]
+[ sql ] [ SQL ] SELECT * FROM goods g LEFT JOIN goodstype t ON g.GT_Id = t.GT_Id LEFT JOIN image i ON g.Goods_Id = G_Id   [ RunTime:0.044679s ]
+
+---------------------------------------------------------------
+[ 2018-04-18T23:16:11+08:00 ] 127.0.0.1 127.0.0.1 POST /wxshop/index.php/wshop/Test/ceshi
+[ log ] 127.0.0.1/wxshop/index.php/wshop/Test/ceshi [运行时间：0.065676s][吞吐率：15.23req/s] [内存消耗：1,270.91kb] [文件加载：38]
+[ info ] [ ROUTE ] array (
+  'type' => 'module',
+  'module' => 
+  array (
+    0 => 'wshop',
+    1 => 'Test',
+    2 => 'ceshi',
+  ),
+)
+[ info ] [ HEADER ] array (
+  'host' => '127.0.0.1',
+  'connection' => 'keep-alive',
+  'accept' => 'application/json, text/plain, */*',
+  'origin' => 'http://127.0.0.1:8080',
+  'user-agent' => 'Mozilla/5.0 (Linux; Android 5.1.1; Nexus 6 Build/LYZ28E) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/48.0.2564.23 Mobile Safari/537.36 wechatdevtools/1.02.1804120 MicroMessenger/6.5.7 webview/15240556820373841 webdebugger port/52611',
+  'referer' => 'http://127.0.0.1:8080/',
+  'accept-encoding' => 'gzip, deflate, br',
+  'accept-language' => 'zh-CN,zh;q=0.8',
+  'content-type' => 'application/x-www-form-urlencoded;charset=UTF-8',
+  'content-length' => '0',
+)
+[ info ] [ PARAM ] array (
+)
+[ info ] [ LANG ] C:\Users\Administrator\Desktop\work\wxshop\thinkphp\lang\zh-cn.php
+[ info ] [ LOG ] INIT File
+
+---------------------------------------------------------------
+[ 2018-04-18T23:40:49+08:00 ] 127.0.0.1 127.0.0.1 POST /wxshop/index.php/wshop/Index/getType
+[ log ] 127.0.0.1/wxshop/index.php/wshop/Index/getType [运行时间：0.138789s][吞吐率：7.21req/s] [内存消耗：2,056.70kb] [文件加载：46]
+[ info ] [ ROUTE ] array (
+  'type' => 'module',
+  'module' => 
+  array (
+    0 => 'wshop',
+    1 => 'Index',
+    2 => 'getType',
+  ),
+)
+[ info ] [ HEADER ] array (
+  'host' => '127.0.0.1',
+  'connection' => 'keep-alive',
+  'accept' => 'application/json, text/plain, */*',
+  'origin' => 'http://127.0.0.1:8080',
+  'user-agent' => 'Mozilla/5.0 (Linux; Android 5.1.1; Nexus 6 Build/LYZ28E) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/48.0.2564.23 Mobile Safari/537.36 wechatdevtools/1.02.1804120 MicroMessenger/6.5.7 webview/15240556820373841 webdebugger port/52611',
+  'referer' => 'http://127.0.0.1:8080/',
+  'accept-encoding' => 'gzip, deflate, br',
+  'accept-language' => 'zh-CN,zh;q=0.8',
+  'cookie' => 'think_var=zh-cn',
+  'content-type' => 'application/x-www-form-urlencoded;charset=UTF-8',
+  'content-length' => '0',
+)
+[ info ] [ PARAM ] array (
+)
+[ info ] [ RUN ] Method [ <user> public method getType ] {
+  @@ C:\Users\Administrator\Desktop\work\wxshop\application\wshop\controller\Index.php 13 - 21
+}
+
+[ info ] [ DB ] INIT mysql
+[ info ] [ LOG ] INIT File
+[ sql ] [ DB ] CONNECT:[ UseTime:0.004304s ] mysql:dbname=wshop;host=127.0.0.1;charset=utf8
+[ sql ] [ SQL ] SHOW COLUMNS FROM `goodstype` [ RunTime:0.013333s ]
+[ sql ] [ SQL ] SELECT * FROM `goodstype`  [ RunTime:0.000564s ]
+
+---------------------------------------------------------------
+[ 2018-04-18T23:40:49+08:00 ] 127.0.0.1 127.0.0.1 POST /wxshop/index.php/wshop/Index/getGoods
+[ log ] 127.0.0.1/wxshop/index.php/wshop/Index/getGoods [运行时间：0.160436s][吞吐率：6.23req/s] [内存消耗：2,064.22kb] [文件加载：46]
+[ info ] [ ROUTE ] array (
+  'type' => 'module',
+  'module' => 
+  array (
+    0 => 'wshop',
+    1 => 'Index',
+    2 => 'getGoods',
+  ),
+)
+[ info ] [ HEADER ] array (
+  'host' => '127.0.0.1',
+  'connection' => 'keep-alive',
+  'accept' => 'application/json, text/plain, */*',
+  'origin' => 'http://127.0.0.1:8080',
+  'user-agent' => 'Mozilla/5.0 (Linux; Android 5.1.1; Nexus 6 Build/LYZ28E) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/48.0.2564.23 Mobile Safari/537.36 wechatdevtools/1.02.1804120 MicroMessenger/6.5.7 webview/15240556820373841 webdebugger port/52611',
+  'referer' => 'http://127.0.0.1:8080/',
+  'accept-encoding' => 'gzip, deflate, br',
+  'accept-language' => 'zh-CN,zh;q=0.8',
+  'cookie' => 'think_var=zh-cn',
+  'content-type' => 'application/x-www-form-urlencoded;charset=UTF-8',
+  'content-length' => '0',
+)
+[ info ] [ PARAM ] array (
+)
+[ info ] [ RUN ] Method [ <user> public method getGoods ] {
+  @@ C:\Users\Administrator\Desktop\work\wxshop\application\wshop\controller\Index.php 22 - 33
+}
+
+[ info ] [ DB ] INIT mysql
+[ info ] [ LOG ] INIT File
+[ sql ] [ DB ] CONNECT:[ UseTime:0.013465s ] mysql:dbname=wshop;host=127.0.0.1;charset=utf8
+[ sql ] [ SQL ] SHOW COLUMNS FROM `goods` [ RunTime:0.013054s ]
+[ sql ] [ SQL ] SELECT * FROM goods g LEFT JOIN goodstype t ON g.GT_Id = t.GT_Id LEFT JOIN image i ON g.Goods_Id = G_Id   [ RunTime:0.002225s ]
+
+---------------------------------------------------------------
+[ 2018-04-18T23:40:53+08:00 ] 127.0.0.1 127.0.0.1 POST /wxshop/index.php/wshop/Index/getType
+[ log ] 127.0.0.1/wxshop/index.php/wshop/Index/getType [运行时间：0.125369s][吞吐率：7.98req/s] [内存消耗：2,056.70kb] [文件加载：46]
+[ info ] [ ROUTE ] array (
+  'type' => 'module',
+  'module' => 
+  array (
+    0 => 'wshop',
+    1 => 'Index',
+    2 => 'getType',
+  ),
+)
+[ info ] [ HEADER ] array (
+  'host' => '127.0.0.1',
+  'connection' => 'keep-alive',
+  'accept' => 'application/json, text/plain, */*',
+  'origin' => 'http://127.0.0.1:8080',
+  'user-agent' => 'Mozilla/5.0 (Linux; Android 5.1.1; Nexus 6 Build/LYZ28E) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/48.0.2564.23 Mobile Safari/537.36 wechatdevtools/1.02.1804120 MicroMessenger/6.5.7 webview/15240556820373841 webdebugger port/52611',
+  'referer' => 'http://127.0.0.1:8080/',
+  'accept-encoding' => 'gzip, deflate, br',
+  'accept-language' => 'zh-CN,zh;q=0.8',
+  'cookie' => 'think_var=zh-cn',
+  'content-type' => 'application/x-www-form-urlencoded;charset=UTF-8',
+  'content-length' => '0',
+)
+[ info ] [ PARAM ] array (
+)
+[ info ] [ RUN ] Method [ <user> public method getType ] {
+  @@ C:\Users\Administrator\Desktop\work\wxshop\application\wshop\controller\Index.php 13 - 21
+}
+
+[ info ] [ DB ] INIT mysql
+[ info ] [ LOG ] INIT File
+[ sql ] [ DB ] CONNECT:[ UseTime:0.003014s ] mysql:dbname=wshop;host=127.0.0.1;charset=utf8
+[ sql ] [ SQL ] SHOW COLUMNS FROM `goodstype` [ RunTime:0.012614s ]
+[ sql ] [ SQL ] SELECT * FROM `goodstype`  [ RunTime:0.000453s ]
+
+---------------------------------------------------------------
+[ 2018-04-18T23:40:53+08:00 ] 127.0.0.1 127.0.0.1 POST /wxshop/index.php/wshop/Index/getGoods
+[ log ] 127.0.0.1/wxshop/index.php/wshop/Index/getGoods [运行时间：0.139527s][吞吐率：7.17req/s] [内存消耗：2,064.22kb] [文件加载：46]
+[ info ] [ ROUTE ] array (
+  'type' => 'module',
+  'module' => 
+  array (
+    0 => 'wshop',
+    1 => 'Index',
+    2 => 'getGoods',
+  ),
+)
+[ info ] [ HEADER ] array (
+  'host' => '127.0.0.1',
+  'connection' => 'keep-alive',
+  'accept' => 'application/json, text/plain, */*',
+  'origin' => 'http://127.0.0.1:8080',
+  'user-agent' => 'Mozilla/5.0 (Linux; Android 5.1.1; Nexus 6 Build/LYZ28E) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/48.0.2564.23 Mobile Safari/537.36 wechatdevtools/1.02.1804120 MicroMessenger/6.5.7 webview/15240556820373841 webdebugger port/52611',
+  'referer' => 'http://127.0.0.1:8080/',
+  'accept-encoding' => 'gzip, deflate, br',
+  'accept-language' => 'zh-CN,zh;q=0.8',
+  'cookie' => 'think_var=zh-cn',
+  'content-type' => 'application/x-www-form-urlencoded;charset=UTF-8',
+  'content-length' => '0',
+)
+[ info ] [ PARAM ] array (
+)
+[ info ] [ RUN ] Method [ <user> public method getGoods ] {
+  @@ C:\Users\Administrator\Desktop\work\wxshop\application\wshop\controller\Index.php 22 - 33
+}
+
+[ info ] [ DB ] INIT mysql
+[ info ] [ LOG ] INIT File
+[ sql ] [ DB ] CONNECT:[ UseTime:0.002975s ] mysql:dbname=wshop;host=127.0.0.1;charset=utf8
+[ sql ] [ SQL ] SHOW COLUMNS FROM `goods` [ RunTime:0.012370s ]
+[ sql ] [ SQL ] SELECT * FROM goods g LEFT JOIN goodstype t ON g.GT_Id = t.GT_Id LEFT JOIN image i ON g.Goods_Id = G_Id   [ RunTime:0.000924s ]
+
+---------------------------------------------------------------
+[ 2018-04-18T23:41:09+08:00 ] 127.0.0.1 127.0.0.1 POST /wxshop/index.php/wshop/Index/getGoods
+[ log ] 127.0.0.1/wxshop/index.php/wshop/Index/getGoods [运行时间：0.122937s][吞吐率：8.13req/s] [内存消耗：2,064.22kb] [文件加载：46]
+[ info ] [ ROUTE ] array (
+  'type' => 'module',
+  'module' => 
+  array (
+    0 => 'wshop',
+    1 => 'Index',
+    2 => 'getGoods',
+  ),
+)
+[ info ] [ HEADER ] array (
+  'host' => '127.0.0.1',
+  'connection' => 'keep-alive',
+  'accept' => 'application/json, text/plain, */*',
+  'origin' => 'http://127.0.0.1:8080',
+  'user-agent' => 'Mozilla/5.0 (Linux; Android 5.1.1; Nexus 6 Build/LYZ28E) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/48.0.2564.23 Mobile Safari/537.36 wechatdevtools/1.02.1804120 MicroMessenger/6.5.7 webview/15240556820373841 webdebugger port/52611',
+  'referer' => 'http://127.0.0.1:8080/',
+  'accept-encoding' => 'gzip, deflate, br',
+  'accept-language' => 'zh-CN,zh;q=0.8',
+  'cookie' => 'think_var=zh-cn',
+  'content-type' => 'application/x-www-form-urlencoded;charset=UTF-8',
+  'content-length' => '0',
+)
+[ info ] [ PARAM ] array (
+)
+[ info ] [ RUN ] Method [ <user> public method getGoods ] {
+  @@ C:\Users\Administrator\Desktop\work\wxshop\application\wshop\controller\Index.php 22 - 33
+}
+
+[ info ] [ DB ] INIT mysql
+[ info ] [ LOG ] INIT File
+[ sql ] [ DB ] CONNECT:[ UseTime:0.003850s ] mysql:dbname=wshop;host=127.0.0.1;charset=utf8
+[ sql ] [ SQL ] SHOW COLUMNS FROM `goods` [ RunTime:0.040284s ]
+[ sql ] [ SQL ] SELECT * FROM goods g LEFT JOIN goodstype t ON g.GT_Id = t.GT_Id LEFT JOIN image i ON g.Goods_Id = G_Id   [ RunTime:0.000792s ]
+
+---------------------------------------------------------------
+[ 2018-04-18T23:41:09+08:00 ] 127.0.0.1 127.0.0.1 POST /wxshop/index.php/wshop/Index/getType
+[ log ] 127.0.0.1/wxshop/index.php/wshop/Index/getType [运行时间：0.152982s][吞吐率：6.54req/s] [内存消耗：2,056.70kb] [文件加载：46]
+[ info ] [ ROUTE ] array (
+  'type' => 'module',
+  'module' => 
+  array (
+    0 => 'wshop',
+    1 => 'Index',
+    2 => 'getType',
+  ),
+)
+[ info ] [ HEADER ] array (
+  'host' => '127.0.0.1',
+  'connection' => 'keep-alive',
+  'accept' => 'application/json, text/plain, */*',
+  'origin' => 'http://127.0.0.1:8080',
+  'user-agent' => 'Mozilla/5.0 (Linux; Android 5.1.1; Nexus 6 Build/LYZ28E) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/48.0.2564.23 Mobile Safari/537.36 wechatdevtools/1.02.1804120 MicroMessenger/6.5.7 webview/15240556820373841 webdebugger port/52611',
+  'referer' => 'http://127.0.0.1:8080/',
+  'accept-encoding' => 'gzip, deflate, br',
+  'accept-language' => 'zh-CN,zh;q=0.8',
+  'cookie' => 'think_var=zh-cn',
+  'content-type' => 'application/x-www-form-urlencoded;charset=UTF-8',
+  'content-length' => '0',
+)
+[ info ] [ PARAM ] array (
+)
+[ info ] [ RUN ] Method [ <user> public method getType ] {
+  @@ C:\Users\Administrator\Desktop\work\wxshop\application\wshop\controller\Index.php 13 - 21
+}
+
+[ info ] [ DB ] INIT mysql
+[ info ] [ LOG ] INIT File
+[ sql ] [ DB ] CONNECT:[ UseTime:0.003712s ] mysql:dbname=wshop;host=127.0.0.1;charset=utf8
+[ sql ] [ SQL ] SHOW COLUMNS FROM `goodstype` [ RunTime:0.039290s ]
+[ sql ] [ SQL ] SELECT * FROM `goodstype`  [ RunTime:0.000498s ]
+
+---------------------------------------------------------------
+[ 2018-04-18T23:41:38+08:00 ] 127.0.0.1 127.0.0.1 POST /wxshop/index.php/wshop/Index/getType
+[ log ] 127.0.0.1/wxshop/index.php/wshop/Index/getType [运行时间：0.106464s][吞吐率：9.39req/s] [内存消耗：2,056.55kb] [文件加载：46]
+[ info ] [ ROUTE ] array (
+  'type' => 'module',
+  'module' => 
+  array (
+    0 => 'wshop',
+    1 => 'Index',
+    2 => 'getType',
+  ),
+)
+[ info ] [ HEADER ] array (
+  'host' => '127.0.0.1',
+  'connection' => 'keep-alive',
+  'accept' => 'application/json, text/plain, */*',
+  'origin' => 'http://127.0.0.1:8080',
+  'user-agent' => 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/65.0.3325.181 Safari/537.36',
+  'referer' => 'http://127.0.0.1:8080/',
+  'accept-encoding' => 'gzip, deflate, br',
+  'accept-language' => 'zh-CN,zh;q=0.9,en;q=0.8',
+  'content-type' => 'application/x-www-form-urlencoded;charset=UTF-8',
+  'content-length' => '0',
+)
+[ info ] [ PARAM ] array (
+)
+[ info ] [ RUN ] Method [ <user> public method getType ] {
+  @@ C:\Users\Administrator\Desktop\work\wxshop\application\wshop\controller\Index.php 13 - 21
+}
+
+[ info ] [ DB ] INIT mysql
+[ info ] [ LOG ] INIT File
+[ sql ] [ DB ] CONNECT:[ UseTime:0.003090s ] mysql:dbname=wshop;host=127.0.0.1;charset=utf8
+[ sql ] [ SQL ] SHOW COLUMNS FROM `goodstype` [ RunTime:0.012062s ]
+[ sql ] [ SQL ] SELECT * FROM `goodstype`  [ RunTime:0.000496s ]
+
+---------------------------------------------------------------
+[ 2018-04-18T23:41:38+08:00 ] 127.0.0.1 127.0.0.1 POST /wxshop/index.php/wshop/Index/getGoods
+[ log ] 127.0.0.1/wxshop/index.php/wshop/Index/getGoods [运行时间：0.122476s][吞吐率：8.16req/s] [内存消耗：2,063.98kb] [文件加载：46]
+[ info ] [ ROUTE ] array (
+  'type' => 'module',
+  'module' => 
+  array (
+    0 => 'wshop',
+    1 => 'Index',
+    2 => 'getGoods',
+  ),
+)
+[ info ] [ HEADER ] array (
+  'host' => '127.0.0.1',
+  'connection' => 'keep-alive',
+  'accept' => 'application/json, text/plain, */*',
+  'origin' => 'http://127.0.0.1:8080',
+  'user-agent' => 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/65.0.3325.181 Safari/537.36',
+  'referer' => 'http://127.0.0.1:8080/',
+  'accept-encoding' => 'gzip, deflate, br',
+  'accept-language' => 'zh-CN,zh;q=0.9,en;q=0.8',
+  'content-type' => 'application/x-www-form-urlencoded;charset=UTF-8',
+  'content-length' => '0',
+)
+[ info ] [ PARAM ] array (
+)
+[ info ] [ RUN ] Method [ <user> public method getGoods ] {
+  @@ C:\Users\Administrator\Desktop\work\wxshop\application\wshop\controller\Index.php 22 - 33
+}
+
+[ info ] [ DB ] INIT mysql
+[ info ] [ LOG ] INIT File
+[ sql ] [ DB ] CONNECT:[ UseTime:0.003513s ] mysql:dbname=wshop;host=127.0.0.1;charset=utf8
+[ sql ] [ SQL ] SHOW COLUMNS FROM `goods` [ RunTime:0.012381s ]
+[ sql ] [ SQL ] SELECT * FROM goods g LEFT JOIN goodstype t ON g.GT_Id = t.GT_Id LEFT JOIN image i ON g.Goods_Id = G_Id   [ RunTime:0.000771s ]
+
+---------------------------------------------------------------
+[ 2018-04-18T23:41:50+08:00 ] 127.0.0.1 127.0.0.1 POST /wxshop/index.php/wshop/Index/getGoods
+[ log ] 127.0.0.1/wxshop/index.php/wshop/Index/getGoods [运行时间：0.123724s][吞吐率：8.08req/s] [内存消耗：2,063.97kb] [文件加载：46]
+[ info ] [ ROUTE ] array (
+  'type' => 'module',
+  'module' => 
+  array (
+    0 => 'wshop',
+    1 => 'Index',
+    2 => 'getGoods',
+  ),
+)
+[ info ] [ HEADER ] array (
+  'host' => '127.0.0.1',
+  'connection' => 'keep-alive',
+  'accept' => 'application/json, text/plain, */*',
+  'origin' => 'http://127.0.0.1:8080',
+  'user-agent' => 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/65.0.3325.181 Safari/537.36',
+  'referer' => 'http://127.0.0.1:8080/',
+  'accept-encoding' => 'gzip, deflate, br',
+  'accept-language' => 'zh-CN,zh;q=0.9,en;q=0.8',
+  'content-type' => 'application/x-www-form-urlencoded;charset=UTF-8',
+  'content-length' => '0',
+)
+[ info ] [ PARAM ] array (
+)
+[ info ] [ RUN ] Method [ <user> public method getGoods ] {
+  @@ C:\Users\Administrator\Desktop\work\wxshop\application\wshop\controller\Index.php 22 - 33
+}
+
+[ info ] [ DB ] INIT mysql
+[ info ] [ LOG ] INIT File
+[ sql ] [ DB ] CONNECT:[ UseTime:0.003726s ] mysql:dbname=wshop;host=127.0.0.1;charset=utf8
+[ sql ] [ SQL ] SHOW COLUMNS FROM `goods` [ RunTime:0.013327s ]
+[ sql ] [ SQL ] SELECT * FROM goods g LEFT JOIN goodstype t ON g.GT_Id = t.GT_Id LEFT JOIN image i ON g.Goods_Id = G_Id   [ RunTime:0.000796s ]
+
+---------------------------------------------------------------
+[ 2018-04-18T23:41:50+08:00 ] 127.0.0.1 127.0.0.1 POST /wxshop/index.php/wshop/Index/getType
+[ log ] 127.0.0.1/wxshop/index.php/wshop/Index/getType [运行时间：0.133376s][吞吐率：7.50req/s] [内存消耗：2,056.45kb] [文件加载：46]
+[ info ] [ ROUTE ] array (
+  'type' => 'module',
+  'module' => 
+  array (
+    0 => 'wshop',
+    1 => 'Index',
+    2 => 'getType',
+  ),
+)
+[ info ] [ HEADER ] array (
+  'host' => '127.0.0.1',
+  'connection' => 'keep-alive',
+  'accept' => 'application/json, text/plain, */*',
+  'origin' => 'http://127.0.0.1:8080',
+  'user-agent' => 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/65.0.3325.181 Safari/537.36',
+  'referer' => 'http://127.0.0.1:8080/',
+  'accept-encoding' => 'gzip, deflate, br',
+  'accept-language' => 'zh-CN,zh;q=0.9,en;q=0.8',
+  'content-type' => 'application/x-www-form-urlencoded;charset=UTF-8',
+  'content-length' => '0',
+)
+[ info ] [ PARAM ] array (
+)
+[ info ] [ RUN ] Method [ <user> public method getType ] {
+  @@ C:\Users\Administrator\Desktop\work\wxshop\application\wshop\controller\Index.php 13 - 21
+}
+
+[ info ] [ DB ] INIT mysql
+[ info ] [ LOG ] INIT File
+[ sql ] [ DB ] CONNECT:[ UseTime:0.003398s ] mysql:dbname=wshop;host=127.0.0.1;charset=utf8
+[ sql ] [ SQL ] SHOW COLUMNS FROM `goodstype` [ RunTime:0.012446s ]
+[ sql ] [ SQL ] SELECT * FROM `goodstype`  [ RunTime:0.000540s ]
+
+---------------------------------------------------------------
+[ 2018-04-18T23:42:53+08:00 ] 127.0.0.1 127.0.0.1 POST /wxshop/index.php/wshop/Index/getType
+[ log ] 127.0.0.1/wxshop/index.php/wshop/Index/getType [运行时间：0.122834s][吞吐率：8.14req/s] [内存消耗：2,056.64kb] [文件加载：46]
+[ info ] [ ROUTE ] array (
+  'type' => 'module',
+  'module' => 
+  array (
+    0 => 'wshop',
+    1 => 'Index',
+    2 => 'getType',
+  ),
+)
+[ info ] [ HEADER ] array (
+  'host' => '127.0.0.1',
+  'connection' => 'keep-alive',
+  'accept' => 'application/json, text/plain, */*',
+  'origin' => 'http://127.0.0.1:8080',
+  'user-agent' => 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/65.0.3325.181 Safari/537.36',
+  'referer' => 'http://127.0.0.1:8080/',
+  'accept-encoding' => 'gzip, deflate, br',
+  'accept-language' => 'zh-CN,zh;q=0.9,en;q=0.8',
+  'content-type' => 'application/x-www-form-urlencoded;charset=UTF-8',
+  'content-length' => '0',
+)
+[ info ] [ PARAM ] array (
+)
+[ info ] [ RUN ] Method [ <user> public method getType ] {
+  @@ C:\Users\Administrator\Desktop\work\wxshop\application\wshop\controller\Index.php 14 - 22
+}
+
+[ info ] [ DB ] INIT mysql
+[ info ] [ LOG ] INIT File
+[ sql ] [ DB ] CONNECT:[ UseTime:0.002998s ] mysql:dbname=wshop;host=127.0.0.1;charset=utf8
+[ sql ] [ SQL ] SHOW COLUMNS FROM `goodstype` [ RunTime:0.011410s ]
+[ sql ] [ SQL ] SELECT * FROM `goodstype`  [ RunTime:0.000500s ]
+
+---------------------------------------------------------------
+[ 2018-04-18T23:42:53+08:00 ] 127.0.0.1 127.0.0.1 POST /wxshop/index.php/wshop/Index/getGoods
+[ log ] 127.0.0.1/wxshop/index.php/wshop/Index/getGoods [运行时间：0.133463s][吞吐率：7.49req/s] [内存消耗：2,064.02kb] [文件加载：46]
+[ info ] [ ROUTE ] array (
+  'type' => 'module',
+  'module' => 
+  array (
+    0 => 'wshop',
+    1 => 'Index',
+    2 => 'getGoods',
+  ),
+)
+[ info ] [ HEADER ] array (
+  'host' => '127.0.0.1',
+  'connection' => 'keep-alive',
+  'accept' => 'application/json, text/plain, */*',
+  'origin' => 'http://127.0.0.1:8080',
+  'user-agent' => 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/65.0.3325.181 Safari/537.36',
+  'referer' => 'http://127.0.0.1:8080/',
+  'accept-encoding' => 'gzip, deflate, br',
+  'accept-language' => 'zh-CN,zh;q=0.9,en;q=0.8',
+  'content-type' => 'application/x-www-form-urlencoded;charset=UTF-8',
+  'content-length' => '0',
+)
+[ info ] [ PARAM ] array (
+)
+[ info ] [ RUN ] Method [ <user> public method getGoods ] {
+  @@ C:\Users\Administrator\Desktop\work\wxshop\application\wshop\controller\Index.php 23 - 34
+}
+
+[ info ] [ DB ] INIT mysql
+[ info ] [ LOG ] INIT File
+[ sql ] [ DB ] CONNECT:[ UseTime:0.007667s ] mysql:dbname=wshop;host=127.0.0.1;charset=utf8
+[ sql ] [ SQL ] SHOW COLUMNS FROM `goods` [ RunTime:0.012031s ]
+[ sql ] [ SQL ] SELECT * FROM goods g LEFT JOIN goodstype t ON g.GT_Id = t.GT_Id LEFT JOIN image i ON g.Goods_Id = G_Id   [ RunTime:0.000797s ]
+
+---------------------------------------------------------------

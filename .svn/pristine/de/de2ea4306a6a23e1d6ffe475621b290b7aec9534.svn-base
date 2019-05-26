@@ -1,0 +1,285 @@
+<?php
+namespace app\index\controller;
+use \think\Controller;
+use \think\Db;
+use \think\Session;
+class Goods extends Sesspar
+{
+    public function comlist(){
+        $data = array();
+        if(isset($_GET['com']) && $_GET['com']!=''){
+            $data['BXCom_Name'] = array('like',"%".$_GET['com']."%");
+            $this->assign('com',$_GET['com']);
+        }
+        $rs = Db::table('bxcom')->order('BXCom_Id desc')->where($data)->paginate(10,false,['query'=>request()->param()]);
+        $count = Db::table('bxcom')->where($data)->count();
+        $this->assign('count',$count);      
+    	$this->assign('list',$rs);
+		return $this->fetch();
+    }
+    public function bxlist(){
+        $data = array();
+        if(isset($_GET['bx']) && $_GET['bx']!=''){
+            $data['BX_Name'] = array('like',"%".$_GET['bx']."%");
+            $this->assign('bx',$_GET['bx']);
+        }
+        if(isset($_GET['comid']) && $_GET['comid']!=''){
+            $data['BX_ComId'] = array('like',"%".$_GET['comid']."%");
+            $comname = Db::table("bxcom")->where("BXCom_Id",$_GET['comid'])->value('BXCom_Name');
+            $this->assign('comid',$_GET['comid']);
+            $this->assign('comname',$comname);
+        }
+        $rs = Db::table('com_bx')
+                ->join("bxcom","BX_ComId=BXCom_Id")
+                ->join("bxtype","BX_Type=Ty_Id")
+                ->where($data)
+                ->order('BX_Id desc')
+                ->paginate(10,false,['query'=>request()->param()]);
+        $count = Db::table('com_bx')
+                    ->join("bxcom","BX_ComId=BXCom_Id")
+                    ->join("bxtype","BX_Type=Ty_Id")
+                    ->where($data)
+                    ->count();
+        $img = Db::table("bximg")
+                    ->select();
+        $com = Db::table("bxcom")
+                    ->select();
+        $this->assign('com',$com);            
+        $this->assign('img',$img);
+        $this->assign('count',$count);      
+    	$this->assign('list',$rs);
+		return $this->fetch();
+    }
+    public function bxdel(){
+        $id = $_POST['id'];
+        $rs = Db::table('com_bx')
+                ->where('BX_Id',$id)
+                ->delete();
+        $img = Db::table('bximg')->where('BI_Bx',$id)->select();
+        if($img){
+            Db::table('bximg')->where('BI_Bx',$id)->delete();
+            foreach($img as $key => $value){
+                unlink(substr($value['BI_Img'],5));
+            }
+        }
+        if($rs){
+            echo 1;
+        }else{
+            echo 0;
+        }
+    }
+    public function comdel(){
+        $id = $_POST['id'];
+        $rs = Db::table('bxcom')
+                ->where('BXCom_Id',$id)
+                ->delete();
+        $bx = Db::table('com_bx')->where('BX_ComId',$id)->select();
+        if($bx){ 
+            Db::table('com_bx')->where('BX_ComId',$id)->delete();
+            foreach($bx as $key => $value){
+                $img = Db::table('bximg')->where("BI_Bx",$value['BX_Id'])->select();
+                if($img){
+                    Db::table('bximg')->where("BI_Bx",$value['BX_Id'])->delete();
+                    foreach($img as $key3 => $value3){
+                        unlink((substr($value3['BI_Img'],5)));
+                    }
+                }
+            }
+        }
+        if($rs){
+            echo 1;
+        }else{
+            echo 0;
+        }
+    }
+    public function comedit($id){
+        $rs = Db::table('bxcom')->where('BXCom_Id',$id)->find();
+        $this->assign('msg',$rs);
+		return $this->fetch();
+    }
+    public function subcomedit(){
+        $data = $_POST;
+        $id = $data['BXCom_Id'];
+        Db::table('bxcom')->where('BXCom_Id',$id)->update($data);
+        $rs = Db::table('bxcom')->where($data)->find();
+        if($rs){
+            echo 1;
+        }else{
+            echo 0;
+        }
+    }
+    public function addcom(){
+        return $this->fetch();
+    }
+    public function subaddcom(){
+        $data = $_POST;
+        $rs = Db::table('bxcom')->insert($data);
+        if($rs){
+            echo 1;
+        }else{
+            echo 0;
+        }
+    }
+    public function bxedit($id){
+        $rs = Db::table('com_bx')
+                ->where("BX_Id",$id)
+                ->join("bxcom","BX_ComId=BXCom_Id")
+                ->join("bxtype","BX_Type=Ty_Id")
+                ->find();   
+        $type = Db::table('bxtype')->select();
+        $com = Db::table('bxcom')->select();
+        $this->assign('type',$type);
+        $this->assign('com',$com);
+    	$this->assign('msg',$rs);
+		return $this->fetch();
+    }
+    public function subbxedit(){
+        $data = $_POST;
+        $id = $data['BX_Id'];
+        Db::table('com_bx')->where('BX_Id',$id)->update($data);
+        $rs =  Db::table('com_bx')->where($data)->select();
+        if($rs){
+            echo 1;
+        }else{
+            echo 0;
+        }
+    }
+    public function addbx(){
+        $type = Db::table('bxtype')->select();
+        $com = Db::table('bxcom')->select();
+        $this->assign('type',$type);
+        $this->assign('com',$com);
+		return $this->fetch();
+    }
+    public function subbxadd(){
+        $data = $_POST;
+        $rs = Db::table('com_bx')->insert($data);
+        if($rs){
+            echo 1;
+        }else{
+            echo 0;
+        }
+    }
+    public function imgedit($id){
+        $img = Db::table('bximg')->where("BI_Bx",$id)->select();
+        $this->assign('id',$id);
+        $this->assign('img',$img);
+		return $this->fetch();
+    }
+    public function imgdel(){
+        $id = $_POST['id'];
+        $img = Db::table('bximg')->where('BI_Id',$id)->value("BI_Img");
+        $rs = Db::table('bximg')->where('BI_Id',$id)->delete();
+        if($rs){
+            unlink(substr($img,5));
+            echo 1;
+        }else{
+            echo 0;
+        }
+    }
+    public function upimg(){
+        $file = request()->file('upimg');
+        $info = $file->validate(['ext'=>'jpg,png,gif,jpeg'])->move(ROOT_PATH . 'public' . DS . 'images' . DS . 'bximg');
+        $src = '/hcb/public/images/bximg/'.$info->getSaveName();
+        //$src = '/yhwl/a/public/uploads/'.$info->getSaveName();
+        if($info){
+            $data['BI_Img'] = $src;
+            $data['BI_Bx'] = $_POST["id"];
+            Db::table('bximg')->insert($data);
+            $data['status'] = 1;
+            $data['src'] = $src;  
+            $data['content'] = "上传成功";  
+            return $data; 
+        }else{
+
+            $data['status'] = 0;  
+            $data['content'] = "上传失败";  
+            return $data; 
+        }
+    }
+    public function delallbx(){
+        $id = $_POST['id'];
+        Db::startTrans();
+        try{
+            foreach ($id as $key => $value) {
+                Db::table('com_bx')->where('BX_Id',$value)->delete();
+                $img = Db::table('bximg')->where('BI_Bx',$value)->select();
+                if($img){
+                    Db::table('bximg')->where('BI_Bx',$value)->delete();
+                    foreach($img as $keyy => $valuee){
+                        unlink(substr($valuee['BI_Img'],5));
+                    }
+                }
+            }
+            Db::commit();
+            echo 1;
+        }catch(\Exception $e){
+            Db::rollback();
+            echo 0;
+        }
+    }
+    public function delallcom(){
+        $id = $_POST['id'];
+        Db::startTrans();
+        try{
+            foreach ($id as $key => $value) {
+                Db::table('bxcom')->where('BXCom_Id',$value)->delete();
+                $bx = Db::table('com_bx')->where('BX_ComId',$value)->select();
+                if($bx){ 
+                    Db::table('com_bx')->where('BX_ComId',$value)->delete();
+                    foreach($bx as $key2 => $value2){
+                        $img = Db::table('bximg')->where("BI_Bx",$value2['BX_Id'])->select();
+                        if($img){
+                            Db::table('bximg')->where("BI_Bx",$value2['BX_Id'])->delete();
+                            foreach($img as $key3 => $value3){
+                                unlink((substr($value3['BI_Img'],5)));
+                            }
+                        }
+                    }
+                }
+            }
+            Db::commit();
+            echo 1;
+        }catch(\Exception $e){
+            Db::rollback();
+            echo 0;
+        }
+    }
+    public function uptit(){
+        $file = request()->file('upimg');
+        $info = $file->validate(['ext'=>'jpg,png,gif,jpeg'])->move(ROOT_PATH . 'public' . DS . 'images' . DS . 'bximg');
+        $src = '/hcb/public/images/bximg/'.$info->getSaveName();
+        //$src = '/yhwl/a/public/uploads/'.$info->getSaveName();
+        if($info){
+            $data['BI_Img'] = $src;
+            $data['BI_Bx'] = $_POST["id"];
+            $data['BI_IsTitle'] = 1;
+            $del['BI_Bx'] = $_POST["id"];
+            $del['BI_IsTitle'] = 1;
+            $rss=Db::table('bximg')->where($del)->select();
+            if($rss){
+                Db::table('bximg')->where($del)->delete();
+                foreach($rss as $key => $value){
+                    unlink(substr($value['BI_Img'],5));
+                }
+            }
+            $rss2=Db::table('bximg')->insert($data);
+            if($rss2){
+                $data['status'] = 1;
+                $data['src'] = $src;  
+                $data['content'] = "上传成功";  
+                return $data; 
+            }else{
+                $data['status'] = 0;  
+                $data['content'] = "上传失败";  
+                return $data; 
+            }
+            
+        }else{
+
+            $data['status'] = 0;  
+            $data['content'] = "上传失败";  
+            return $data; 
+        }
+    }
+}

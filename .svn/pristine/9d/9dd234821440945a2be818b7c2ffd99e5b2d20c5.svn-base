@@ -1,0 +1,163 @@
+<?php
+namespace app\index\controller;
+use \think\Controller;
+use \think\Db;
+use \think\Session;
+class Order extends Sesspar
+{
+    public function index()
+    {
+        $data = array();
+
+        if(isset($_GET['status']) && $_GET['status']!='全部状态'){
+            $data['Order_LogisStates'] = $_GET['status'];
+            $this->assign('status',$_GET['status']);
+        }
+        if(isset($_GET['net']) && $_GET['net']!=''){
+            $data['Order_Send | Order_End'] = array('like',"%".$_GET['net']."%");
+            $this->assign('net',$_GET['net']);
+        }
+        if(isset($_GET['username']) && $_GET['username']!=''){
+            $data['Order_BillID'] = array('like',"%".$_GET['username']."%");
+            $this->assign('username',$_GET['username']);
+        }
+        if(isset($_GET['start']) && $_GET['start']!=''){
+            $start = strtotime($_GET['start']);
+             $this->assign('start',$_GET['start']);
+        }else{
+            $start = 0;
+        }
+        if(isset($_GET['end']) && $_GET['end']!=''){
+            $end = strtotime($_GET['end'])+86399;
+            $this->assign('end',$_GET['end']);
+        }else{
+            $end = time();
+        }
+        $data['Order_BillingTime'] = array('between',"$start,$end");
+
+    	$rs = Db::table('order_info')
+                ->where($data)
+    			->paginate(10,false,['query'=>request()->param()]);
+        $count = Db::table('order_info')
+                ->where($data)
+                ->count();
+    	$this->assign('count',$count);
+    	$this->assign('list',$rs);
+		return $this->fetch();
+    }
+    public function orderpay(){
+        $data = array();
+
+        if(isset($_GET['Pay_Status']) && $_GET['Pay_Status']!='全部状态'){
+            $data['Pay_Status'] = $_GET['Pay_Status'];
+            $this->assign('Pay_Status',$_GET['Pay_Status']);
+        }
+        if(isset($_GET['Pay_Type']) && $_GET['Pay_Type']!='全部类型'){
+            $data['Pay_Type'] = $_GET['Pay_Type'];
+            $this->assign('Pay_Type',$_GET['Pay_Type']);
+        }
+        if(isset($_GET['YCode']) && $_GET['YCode']!=''){
+            $data['Order_BillID'] = array('like',"%".$_GET['YCode']."%");
+            $this->assign('YCode',$_GET['YCode']);
+        }
+        if(isset($_GET['start']) && $_GET['start']!=''){
+            $start = strtotime($_GET['start']);
+            $this->assign('start',$_GET['start']);
+        }else{
+            $start = 0;
+        }
+        if(isset($_GET['end']) && $_GET['end']!=''){
+            $end = strtotime($_GET['end'])+86399;
+            $this->assign('end',$_GET['end']);
+        }else{
+            $end = time();
+        }
+        $data['Order_Timeime'] = array('between',"$start,$end");
+
+
+        $msg = Db::table('trans_pay_msg')
+                ->join('order_info','trans_pay_msg.Order_Code=Order_BillID')
+                ->field('*, trans_pay_msg.Order_Code as YCode')
+                ->where($data)
+                ->paginate(10,false,['query'=>request()->param()]);
+        $count = Db::table('trans_pay_msg')
+                ->join('order_info','trans_pay_msg.Order_Code=Order_BillID')
+                ->field('*, trans_pay_msg.Order_Code as YCode')
+                ->where($data)
+                ->count();
+        
+        $this->assign('count',$count);
+        $this->assign('list',$msg);
+        return $this->fetch();
+    }
+    public function delete(){
+        $id = $_POST['id'];
+        Db::startTrans();
+        try{
+            foreach ($id as $key => $value) {
+                $rs = Db::table('order_info')->where('Order_Id',$value)->delete();
+            }
+            Db::commit();
+            echo 1;
+        }catch(\Exception $e){
+            $db->rollback();
+            echo 0;
+        }
+    }
+    public function detail_show($id){
+        $msg = Db::table('order_info')
+                ->where('Order_Id',$id)
+                ->find();
+        $con = Db::connect("mysql://root:root@localhost:3306/".$msg['Order_LogisCode']."#utf8");
+        if($msg['Order_LogisStates'] == '已接单' || $msg['Order_LogisStates'] == '已完成'){
+            $det = $con->table('order_base')->where('Order_BillID',$msg['Order_BillID'])->find();
+            $guiji = $con->table('order_record')->where('Record_Guid',$det['Order_Guid'])->order('Record_Rotime')->select();
+            if($det['Order_PayType']=='现付'){
+                if($det['Order_LogisStates'] == '已接单'){
+                    $a = Db::table('trans_pay_msg')->where('Order_Code',$det['Order_BillID'])->select();
+                    if($a){
+                        if($a[0]['Pay_Status'] == 0 && $a[0]['Pay_Type'] == 2){
+                            $det['Pay_Status'] = '待支付';
+                        }
+                    }
+                }
+            }
+            $this->assign('guiji',$guiji);
+        }else{
+            $det = $msg;
+        }
+        $this->assign('det',$det);
+        return $this->fetch();
+    }
+    public function edit_show($id){
+        $msg = Db::table('order_info')
+                ->where('Order_Id',$id)
+                ->find();
+        if($msg['Order_LogisStates']=='待接单' || $msg['Order_LogisStates']=='共享中'){
+            $ord = $msg;
+        }else{
+            $con = Db::connect("mysql://root:root@localhost:3306/".$msg['Order_LogisCode']."#utf8");
+            $ord = $con->table('order_base')->where('Order_BillID',$msg['Order_LogisCode'])->find();
+        }
+        $logis = Db::table('logistic')->where('Logis_Isptn',1)->select();
+        $this->assign('list',$logis);
+        $this->assign('msg',$ord);
+        return $this->fetch();
+    }
+    public function edit(){
+        $data = array();
+        $data = $_POST;
+        if($data['Order_LogisStates']=='共享中'){
+            $data['Order_LogisCode']='';
+            $data['Order_LogisName']='';
+        }else{
+            $data['Order_LogisName'] = Db::table('logistic')->where('Logis_Code',$data['Order_LogisCode'])->value('Logis_Name');
+        }
+        $rs = Db::table('order_info')->where('Order_BillID',$data['Order_BillID'])->update($data);
+        if($rs){
+            echo 1;
+        }else{
+            echo 0;
+        }
+    }
+}

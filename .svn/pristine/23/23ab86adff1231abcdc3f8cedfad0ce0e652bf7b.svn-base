@@ -1,0 +1,217 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>后台登录-X-admin1.1</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="shortcut icon" href="/favicon.ico" type="__IMG__/x-icon" />
+    <link rel="stylesheet" href="__CSS__/font.css">
+    <link rel="stylesheet" href="__CSS__/xadmin.css">
+    <link rel="stylesheet" href="__CSS__/swiper.min.css">
+    <script type="text/javascript" src="__JS__/jquery.min.js"></script>
+    <script type="text/javascript" src="__JS__/swiper.jquery.min.js"></script>
+    <script src="__LIB__/layui/layui.js" charset="utf-8"></script>
+    <script type="text/javascript" src="__JS__/xadmin.js"></script>
+    <style>
+    .pagination{
+        float: right;
+        margin-right: 60px;
+    }
+    .pagination li{
+        float: left;
+        margin-left: 20px;
+    }
+    .pagination .active{color:red}
+    .pagination .disabled{color:#888888}
+    </style>
+</head>
+<body>
+<div class="page-content">
+  <div class="content">
+    <!-- 右侧内容框架，更改从这里开始 -->
+    <form class="layui-form xbs" action="{:url('index/order/orderpay')}" method="get" id="sform" >
+        <div class="layui-form-pane" style="text-align: center;">
+          <div class="layui-form-item" style="display: inline-block;">
+            <label class="layui-form-label xbs768">接单日期</label>
+            <div class="layui-input-inline xbs768">
+              <input class="layui-input" name="start" placeholder="开始日" value="{$start ? $start : '';}" id="LAY_demorange_s">
+            </div>
+            <div class="layui-input-inline xbs768">
+              <input class="layui-input" name="end" placeholder="截止日" value="{$end ? $end : '';}" id="LAY_demorange_e">
+            </div>
+            <div class="layui-input-inline">
+                <select name="Pay_Status" id='Pay_Status'>
+                {if condition="!isset($Pay_Status) || $Pay_Status=='全部状态' "}
+                <option selected="" value="全部状态">全部状态</option>
+                {elseif condition="$Pay_Status==0" /}
+                <option selected="" value="0">待支付</option>
+                {elseif condition="$Pay_Status==1" /}
+                <option selected="" value="1">已支付</option>
+                {/if}
+                    
+                    <option value="0">待支付</option>
+                    <option value="1">已支付</option>
+                </select>
+            </div>
+            <div class="layui-input-inline">
+                <select name="Pay_Type" id='Pay_Type'>
+                {if condition="!isset($Pay_Type) || $Pay_Type=='全部类型' "}
+                <option selected="" value="全部类型">全部类型</option>
+                {elseif condition="$Pay_Type==1" /}
+                <option selected="" value="1">现金支付</option>
+                {elseif condition="$Pay_Type==2" /}
+                <option selected="" value="2">微信支付</option>
+                {elseif condition="$Pay_Type==3" /}
+                <option selected="" value="3">二维码支付</option>
+                {/if}
+                    
+                    <option value="1">现金支付</option>
+                    <option value="2">微信支付</option>
+                    <option value="3">二维码支付</option>
+                   
+                </select>
+            </div>
+            
+            <div class="layui-input-inline">
+              <input type="text" name="YCode"  placeholder="请输入运单号" autocomplete="off" value="{$YCode ? $YCode : '';}" class="layui-input">
+            </div>
+            <div class="layui-input-inline" style="width:80px">
+                <button class="layui-btn"  lay-submit="" lay-filter="sreach"><i class="layui-icon">&#xe615;</i></button>
+            </div>
+          </div>
+        </div> 
+    </form>
+    <xblock><span class="x-right" style="line-height:40px">共有数据：{$count} 条</span></xblock>
+    <table class="layui-table">
+        <thead>
+            <tr>
+                <th>
+                    运单号
+                </th>
+                <th>
+                    运费
+                </th>
+                <th>
+                    支付类型
+                </th>
+                
+                <th>
+                    接单时间
+                </th>
+                <th>
+                    支付时间
+                </th>
+                <th>
+                    支付状态
+                </th>
+                <th>
+                    操作
+                </th>
+            </tr>
+        </thead>
+        <tbody>
+        {volist name="list" id="vo"}
+            <tr>
+                <td>
+                    {$vo.YCode}
+                </td>
+                <td >
+                    {$vo.Pay}
+                </td>
+                <td >
+                    {if condition="$vo['Pay_Type']==1"}
+                    现金支付
+                    {elseif condition="$vo['Pay_Type']==2" /}
+                    微信支付
+                    {else /}
+                    二维码支付
+                    {/if}
+                </td>
+                
+                <td >
+                    
+                    {$vo.Order_Timeime|date="Y-m-d H:i:s",###}
+                   
+                </td>
+                <td >
+                    {if condition="$vo['Pay_Time']!='' "}
+                    {$vo.Pay_Time|date="Y-m-d H:i:s",###}
+                    {/if}
+                </td>
+                <td >
+                    {if condition="$vo['Pay_Status']==1"}
+                    <span class="layui-btn layui-btn-normal layui-btn-mini">
+                        已支付
+                    </span>
+                    {else /}
+                    <span class="layui-btn layui-btn-normal layui-btn-mini">
+                        待支付
+                    </span>
+                    {/if}
+                </td>
+                <td class="td-manage">
+                    <a style="text-decoration:none" onclick="member_detail('详情','{:url("index/order/detail_show",['id'=>$vo['Order_Id']])}','','510')" href="javascript:;" title="详情">
+                        <i class="layui-icon">&#xe60a;</i>
+                    </a>
+                  
+                </td>
+            </tr>
+        {/volist}
+        </tbody>
+        <tr> 
+            <td colspan="7">
+                {$list->render()} 
+            </td>
+        </tr>
+    </table>
+    <!-- 右侧内容框架，更改从这里结束 -->
+  </div>
+</div>
+<script>
+
+        layui.use(['laydate'], function(){
+          laydate = layui.laydate;//日期插件
+
+          //以上模块根据需要引入
+          var start = {
+            min: '2000-06-16 23:59:59'
+            ,max: laydate.now()
+            ,istoday: false
+            ,choose: function(datas){
+              end.min = datas; //开始日选好后，重置结束日的最小日期
+              end.start = datas //将结束日的初始值设定为开始日
+            }
+          };
+          
+          var end = {
+            min: laydate.now()
+            ,max: '2099-06-16 23:59:59'
+            ,istoday: false
+            ,choose: function(datas){
+              start.max = datas; //结束日选好后，重置开始日的最大日期
+            }
+          };
+          
+          document.getElementById('LAY_demorange_s').onclick = function(){
+            start.elem = this;
+            laydate(start);
+          }
+          document.getElementById('LAY_demorange_e').onclick = function(){
+            end.elem = this
+            laydate(end);
+          }
+          
+        });
+        $('#search').click(function(){
+            $('#sform').submit();
+        })
+    function member_edit (title,url,w,h) {
+        x_admin_show(title,url,w,h); 
+    }
+    function member_detail (title,url,w,h) {
+        x_admin_show(title,url,w,h); 
+    }
+
+</script>
+</body>
+</html>

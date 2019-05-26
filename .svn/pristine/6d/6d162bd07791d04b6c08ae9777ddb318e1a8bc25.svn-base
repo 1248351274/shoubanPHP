@@ -1,0 +1,87 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>后台登录-X-admin1.1</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="shortcut icon" href="/favicon.ico" type="__IMG__/x-icon" />
+    <link rel="stylesheet" href="__CSS__/font.css">
+    <link rel="stylesheet" href="__CSS__/xadmin.css">
+    <link rel="stylesheet" href="__CSS__/swiper.min.css">
+    <script type="text/javascript" src="__JS__/jquery.min.js"></script>
+    <script type="text/javascript" src="__JS__/swiper.jquery.min.js"></script>
+    <script src="__LIB__/layui/layui.js" charset="utf-8"></script>
+    <script type="text/javascript" src="__JS__/xadmin.js"></script>
+
+</head>
+<body>
+    <!-- 中部开始 -->
+    <div class="wrapper">
+        <!-- 右侧主体开始 -->
+        <div class="page-content">
+          <div class="content">
+            <!-- 右侧内容框架，更改从这里开始 -->
+            <form class="layui-form" id="form">
+                <div class="layui-form-item">
+                    <label for="L_username" class="layui-form-label">
+                       用户名
+                    </label>
+                    <div class="layui-input-inline">
+                        <input type="text" id="L_username" name="ULUser_Loname" value="{$msg.ULUser_Loname}" required="" lay-verify="required" readonly
+                        autocomplete="off" class="layui-input">
+                        <input type="hidden" name='ULUser_Id' value="{$msg.ULUser_Id}">
+                        <input type="hidden" name='ULUser_Name' value="{$msg.ULUser_Name}">
+                    </div>
+                </div>
+                <div class="layui-form-item">
+                    <label for="psd" class="layui-form-label">
+                        <span class="x-red">*</span>密码
+                    </label>
+                    <div class="layui-input-inline">
+                        <input type="password" id="psd" name="psd"  required="" lay-verify="required"
+                        autocomplete="off" class="layui-input">
+                    </div>
+                </div>
+                
+                
+                <div class="layui-form-item">
+                    <label for="L_repass" class="layui-form-label">
+                    </label>
+                    <button  class="layui-btn" lay-filter="save" lay-submit="" id="edit_btn">
+                        修改
+                    </button>
+                </div>
+            </form>
+            <!-- 右侧内容框架，更改从这里结束 -->
+          </div>
+        </div>
+        <!-- 右侧主体结束 -->
+    </div>
+    <!-- 中部结束 -->
+<script>
+    $('#edit_btn').click(function(){
+        if($('#psd').val()==''){
+            layer.msg('密码不能为空');
+            return false;
+        }
+        
+        $.ajax({
+            type:"POST",
+            dataType:"json",
+            url:"{:url('index/member/edit_psd')}",
+            data:$('#form').serialize(),
+            success:function(data){
+                if(data==1){
+                    parent.location.reload();
+                }else{
+                    layer.msg('修改失败')
+                }
+            },
+            error:function(){
+                layer.msg('修改失败！')
+            }
+        })
+    })
+</script>
+</body>
+</html>

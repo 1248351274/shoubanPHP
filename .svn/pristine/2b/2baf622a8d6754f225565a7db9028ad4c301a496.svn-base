@@ -1,0 +1,86 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>后台登录-X-admin1.1</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="shortcut icon" href="/favicon.ico" type="__IMG__/x-icon" />
+    <link rel="stylesheet" href="__CSS__/font.css">
+    <link rel="stylesheet" href="__CSS__/xadmin.css">
+    <link rel="stylesheet" href="__CSS__/swiper.min.css">
+    <script type="text/javascript" src="__JS__/jquery.min.js"></script>
+    <script type="text/javascript" src="__JS__/swiper.jquery.min.js"></script>
+    <script src="__LIB__/layui/layui.js" charset="utf-8"></script>
+    <script type="text/javascript" src="__JS__/xadmin.js"></script>
+
+</head>
+<body>
+    <!-- 中部开始 -->
+    <div class="wrapper">
+        <!-- 右侧主体开始 -->
+        <div class="page-content">
+          <div class="content">
+            <!-- 右侧内容框架，更改从这里开始 -->
+            <form class="layui-form" id="form">
+                <div class="layui-form-item">
+                    <label class="layui-form-label"><span class="x-red">*</span>物流公司</label>
+                    <div class="layui-input-block">
+                        <input type="text" id="name" placeholder="请输入物流公司名" name="name" class="layui-input">
+                    </div>
+                </div>
+                <div class="layui-form-item">
+                    <label class="layui-form-label"><span class="x-red">*</span>手机号</label>
+                    <div class="layui-input-block">
+                        <input type="number" id="tel" placeholder="请输入手机号" name="tel" class="layui-input">
+                    </div>
+                </div>
+                <div class="layui-form-item">
+                    <label class="layui-form-label"><span class="x-red">*</span>联系人</label>
+                    <div class="layui-input-block">
+                        <input type="text" id="linker" placeholder="请输入用户名" name="linker" class="layui-input">
+                    </div>
+                </div>
+                
+                <div class="layui-form-item">
+                    <label for="L_repass" class="layui-form-label">
+                    </label>
+                    <button  class="layui-btn" lay-filter="save" lay-submit="" id="add_btn">
+                        添加
+                    </button>
+                </div>
+            </form>
+            <!-- 右侧内容框架，更改从这里结束 -->
+          </div>
+        </div>
+        <!-- 右侧主体结束 -->
+    </div>
+    <!-- 中部结束 -->
+<script>
+    $('#add_btn').click(function(){
+        if($('#name').val()=="" || $('#tel').val()=="" || $('#linker').val()==""){
+            layer.msg('必填项不能为空');
+            return false;
+        }
+        
+        $.ajax({
+            type:"POST",
+            dataType:"json",
+            url:"{:url('index/apply/add')}",
+            data:$('#form').serialize(),
+            success:function(data){
+                if(data==1){
+                    parent.location.reload();
+                }else if(data==2){
+                    layer.msg('用户信息已提交，请勿重复操作');
+                }else{
+                    layer.msg('添加失败');
+                }
+            },
+            error:function(){
+                layer.msg('添加失败！')
+            }
+        })
+    })
+</script>
+</body>
+</html>

@@ -1,0 +1,103 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>合财保后台登录</title>
+    <meta name="renderer" content="webkit|ie-comp|ie-stand">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width,user-scalable=yes, minimum-scale=0.4, initial-scale=0.8,target-densitydpi=low-dpi" />
+    <meta http-equiv="Cache-Control" content="no-siteapp" />
+    <link rel="shortcut icon" href="/favicon.ico" type="__IMG__/x-icon" />
+    <link rel="stylesheet" href="__CSS__/font.css">
+    <link rel="stylesheet" href="__CSS__/xadmin.css">
+    <script type="text/javascript" src="__JS__/jquery.min.js"></script>
+    <script src="__LIB__/layui/layui.js" charset="utf-8"></script>
+    <script type="text/javascript" src="__JS__/xadmin.js"></script>
+    <script type="text/javascript" src="__JS__/jquery.form.js"></script>
+<style>
+    .imglist{
+        width:200px;
+        height:100px;
+        float:left;
+        padding:10px;
+        position:relative;
+    }
+    .delbtn{
+        margin-left: 45px;
+    }
+    .add{
+        background-color:#009688;
+        width:90px;
+        height:38px;
+        float:left;
+        text-align:center;
+        line-height: 38px;
+        color:#fff;
+        font-size: 14px;
+        display:block;
+        position:relative;
+        top:10px;
+        left:10px
+    }
+</style>
+</head>
+<body>
+        <div class="x-body">
+            {volist name="img" id="vo"}
+                <div class="imglist">
+                        <img src="{$vo.BI_Img}" class="img" style="width: 180px;height: 80px" alt="无图片">
+                        <button class="layui-btn delbtn" onclick="imgdel(this,{$vo.BI_Id})">删除图片</button>
+                </div>
+            {/volist}
+            
+        </div>
+        <form id="upload" method="post" enctype="multipart/form-data" action="{:url('index/company/upimg')}">
+            <div class="add" >
+                <input type="hidden" name = "id" value="{$id}">
+                <i class="layui-icon"></i>添加
+                <input type="file" style="opacity: 0;width:90px;height:38px;position: absolute;top:0px;left:0px"  id="upimg" name="upimg">
+            </div>
+        </form>
+<script>
+    $('#upimg').change(function(){
+        $('#upload').ajaxSubmit({
+            dataType:'json',
+            success:function(data){    
+                if(data.status==1){
+                    location.reload();
+                    layer.msg(data.content);
+                }else{
+                    layer.msg(data.content);
+                }
+            },
+            error:function(){
+                layer.msg('上传失败');
+            }
+        })
+    });
+   function imgdel(obj,id) {
+        layer.confirm('确认要删除吗？',function(index){
+            //发异步删除数据
+            $.ajax({
+                type:"POST",
+                dataType:"json",
+                url:"{:url('index/company/imgdel')}",
+                data:{id:id},
+                success:function(data){
+                    if(data==1){
+                        $(obj).parent("div").remove();
+                        layer.msg('已删除!',{icon:1,time:1000});
+                    }else{
+                        layer.msg('删除失败')
+                    }
+                },
+                error:function(){
+                    layer.msg('删除失败')
+                }
+            })
+            
+        });
+   }
+</script>
+</body>
+</html>

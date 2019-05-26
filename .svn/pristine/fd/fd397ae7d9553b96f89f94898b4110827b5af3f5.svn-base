@@ -1,0 +1,65 @@
+<?php
+namespace app\index\controller;
+use \think\Controller;
+use \think\Db;
+use \think\Session;
+class Version extends Sesspar
+{
+    public function index()
+    {	
+
+    	$rs = Db::table('version')
+    			->paginate(10);
+    	$count = Db::table('version')
+                ->count();		
+    	$this->assign('count',$count);
+        $this->assign('list',$rs);
+		return $this->fetch();
+    }
+    public function edit_show($id){
+        $rs = Db::table('version')
+                ->where('Id',$id)
+                ->find();
+        $this->assign('msg',$rs);
+        return $this->fetch();
+    }
+    public function edit(){
+        $data = $_POST;
+        $data['Time'] = time();
+        $rs = Db::table('version')->where('Id',$data['Id'])->update($data);
+        if($rs){
+            echo 1;
+        }else{
+            echo 0;
+        }
+    }
+    public function add_show(){
+        return $this->fetch();
+    }
+    public function add(){
+        $data = $_POST;
+        $data['Time'] = time();
+        
+        $rs = Db::table('version')->insert($data);
+
+        if($rs){
+            echo 1;
+        }else{
+            echo 0;
+        }
+    }
+    public function qrcode_show($id){
+        $dow = Db::table('version')->where('Id',$id)->value('Download');
+        $this->assign('dow',$dow);
+        return $this->fetch();
+    }
+    public function delete(){
+        $id = $_POST['id'];
+        $rs = Db::table('version')->where('Id',$id)->delete();
+        if($rs){
+            echo 1;
+        }else{
+            echo 0;
+        }
+    }
+}

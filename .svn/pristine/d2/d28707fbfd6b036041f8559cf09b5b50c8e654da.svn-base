@@ -1,0 +1,277 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>后台登录-X-admin1.1</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="shortcut icon" href="/favicon.ico" type="__IMG__/x-icon" />
+    <link rel="stylesheet" href="__CSS__/font.css">
+    <link rel="stylesheet" href="__CSS__/xadmin.css">
+    <link rel="stylesheet" href="__CSS__/swiper.min.css">
+    <script type="text/javascript" src="__JS__/jquery.min.js"></script>
+    <script type="text/javascript" src="__JS__/swiper.jquery.min.js"></script>
+    <script src="__LIB__/layui/layui.js" charset="utf-8"></script>
+    <script type="text/javascript" src="__JS__/xadmin.js"></script>
+    <style>
+    .pagination{
+        float: right;
+        margin-right: 60px;
+    }
+    .pagination li{
+        float: left;
+        margin-left: 20px;
+    }
+    .pagination .active{color:red}
+    .pagination .disabled{color:#888888}
+    </style>
+</head>
+<body>
+<div class="page-content">
+  <div class="content">
+    <!-- 右侧内容框架，更改从这里开始 -->
+    <form class="layui-form xbs" action="{:url('index/order/index')}" method="get" id="sform" >
+        <div class="layui-form-pane" style="text-align: center;">
+          <div class="layui-form-item" style="display: inline-block;">
+            <label class="layui-form-label xbs768">日期范围</label>
+            <div class="layui-input-inline xbs768">
+              <input class="layui-input" name="start" placeholder="开始日" value="{$start ? $start : '';}" id="LAY_demorange_s">
+            </div>
+            <div class="layui-input-inline xbs768">
+              <input class="layui-input" name="end" placeholder="截止日" value="{$end ? $end : '';}" id="LAY_demorange_e">
+            </div>
+            <div class="layui-input-inline">
+                <select name="status" id='status'>
+              
+                    <option value="{$status ? $status : '全部状态';}">{$status ? $status : '全部状态';}</option>
+                    <option value="待接单">待接单</option>
+                    <option value="共享中">共享中</option>
+                    <option value="已接单">已接单</option>
+                    <option value="已完成">已完成</option>
+                </select>
+            </div>
+            <div class="layui-input-inline">
+              <input type="text" name="net"  placeholder="请输入始发站或目的站" value="{$net ? $net : '';}" autocomplete="off" class="layui-input">
+            </div>
+            
+            <div class="layui-input-inline">
+              <input type="text" name="username" value="{$username ? $username : '';}"  placeholder="请输入运单号" autocomplete="off" class="layui-input">
+            </div>
+            <div class="layui-input-inline" style="width:80px">
+                <button class="layui-btn"  lay-submit="" lay-filter="sreach"><i class="layui-icon">&#xe615;</i></button>
+            </div>
+          </div>
+        </div> 
+    </form>
+    <xblock><button class="layui-btn layui-btn-danger" onclick="delAll()"><i class="layui-icon">&#xe640;</i>批量删除</button><span class="x-right" style="line-height:40px">共有数据：{$count} 条</span></xblock>
+    <table class="layui-table">
+        <thead>
+            <tr>
+                <th>
+                    <input type="checkbox" id='chbox' class='chbox'>
+                </th>
+                <th>
+                    ID
+                </th>
+                <th>
+                    运单号
+                </th>
+                <th>
+                    验证码
+                </th>
+                <th>
+                    货物名称
+                </th>
+                <th>
+                    始发站
+                </th>
+                <th>
+                    目的站
+                </th>
+                <th>
+                    下单时间
+                </th>
+                <th>
+                    承运物流
+                </th>
+                <th>
+                    运单状态
+                </th>
+                <th>
+                    操作
+                </th>
+            </tr>
+        </thead>
+        <tbody>
+        {volist name="list" id="vo"}
+            <tr>
+                <td>
+                    <input type="checkbox" value="{$vo.Order_Id}" class='chbox' name="chbox">
+                </td>
+                <td>
+                    {$i}
+                </td>
+                <td>
+                    {$vo.Order_BillID}
+                </td>
+                <td>
+                    {$vo.Order_Code}
+                </td>
+                <td >
+                    {$vo.Order_Goods}
+                </td>
+                <td >
+                    {$vo.Order_Send}
+                </td>
+                <td >
+                    {$vo.Order_End}
+                </td>
+                <td >
+                    {$vo.Order_BillingTime|date="Y-m-d H:i:s",###}
+                </td>
+                <td>
+                    {$vo.Order_LogisName}
+                </td>
+                <td class="td-status">
+                    {$vo.Order_LogisStates}
+                </td>
+                <td class="td-manage">
+                    <a style="text-decoration:none" onclick="member_detail('详情','{:url("index/order/detail_show",['id'=>$vo['Order_Id']])}','','510')" href="javascript:;" title="详情">
+                        <i class="layui-icon">&#xe60a;</i>
+                    </a>
+                    {if condition="$vo['Order_LogisStates']=='待接单' || $vo['Order_LogisStates']=='共享中'"}
+                    <a title="编辑" href="javascript:;" onclick="member_edit('编辑','{:url("index/order/edit_show",['id'=>$vo['Order_Id']])}','500','510')"
+                    class="ml-5" style="text-decoration:none">
+                        <i class="layui-icon">&#xe642;</i>
+                    </a>
+                    {else/}&nbsp;&nbsp;&nbsp;&nbsp;
+                    {/if}
+                    <a title="删除" href="javascript:;" onclick="member_del(this,{$vo.Order_Id})" 
+                    style="text-decoration:none">
+                        <i class="layui-icon">&#xe640;</i>
+                    </a>
+                </td>
+            </tr>
+        {/volist}
+        </tbody>
+        <tr> 
+            <td colspan="11">
+                {$list->render()} 
+            </td>
+        </tr>
+    </table>
+    <!-- 右侧内容框架，更改从这里结束 -->
+  </div>
+</div>
+<script>
+    $('#chbox').click(function(){
+        if($('#chbox').prop('checked')==true){
+            $('.chbox').prop('checked',true);
+        }else{
+            $('.chbox').prop('checked',false);
+        }
+    })
+            //批量删除提交
+    function delAll () {
+        layer.confirm('确认要删除吗？',function(index){
+            //捉到所有被选中的，发异步进行删除
+            var chbox=$("input[name='chbox']");
+            ch=[];
+            for(k in chbox){
+                if(chbox[k].checked)
+                    ch.push(chbox[k].value);
+            }
+            if(ch.length==0){
+                layer.msg('选择数据为空');
+                return false;
+            }
+            $.ajax({
+                type:"POST",
+                dataType:"json",
+                url:"{:url('index/order/delete')}",
+                data:{id:ch},
+                success:function(data){
+                    if(data==1){
+                        layer.msg('已删除!',{icon:1,time:1000,end:function(){
+                            window.location.reload();
+                        }});
+                        
+                    }else{
+                        layer.msg('删除失败')
+                    }
+                },
+                error:function(){
+                    layer.msg('删除失败')
+                }
+            })
+        });
+    }
+        layui.use(['laydate'], function(){
+          laydate = layui.laydate;//日期插件
+
+          //以上模块根据需要引入
+          var start = {
+            min: '2000-06-16 23:59:59'
+            ,max: laydate.now()
+            ,istoday: false
+            ,choose: function(datas){
+              end.min = datas; //开始日选好后，重置结束日的最小日期
+              end.start = datas //将结束日的初始值设定为开始日
+            }
+          };
+          
+          var end = {
+            min: laydate.now()
+            ,max: '2099-06-16 23:59:59'
+            ,istoday: false
+            ,choose: function(datas){
+              start.max = datas; //结束日选好后，重置开始日的最大日期
+            }
+          };
+          
+          document.getElementById('LAY_demorange_s').onclick = function(){
+            start.elem = this;
+            laydate(start);
+          }
+          document.getElementById('LAY_demorange_e').onclick = function(){
+            end.elem = this
+            laydate(end);
+          }
+          
+        });
+        $('#search').click(function(){
+            $('#sform').submit();
+        })
+    function member_edit (title,url,w,h) {
+        x_admin_show(title,url,w,h); 
+    }
+    function member_detail (title,url,w,h) {
+        x_admin_show(title,url,w,h); 
+    }
+    function member_del(obj,id){
+        layer.confirm('确认要删除吗？',function(index){
+            //发异步删除数据
+            ida=[];
+            ida[0] = id; 
+            $.ajax({
+                type:"POST",
+                dataType:"json",
+                url:"{:url('index/order/delete')}",
+                data:{id:ida},
+                success:function(data){
+                    if(data==1){
+                        $(obj).parents("tr").remove();
+                        layer.msg('已删除!',{icon:1,time:1000});
+                    }else{
+                        layer.msg('删除失败')
+                    }
+                },
+                error:function(){
+                    layer.msg('删除失败')
+                }
+            })
+            
+        });
+    }
+</script>
+</body>
+</html>
