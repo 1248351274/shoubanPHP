@@ -38,9 +38,11 @@ class Index extends UserBase
     public function goodShow(){
         $data = array();
         if(isset($_POST['type'])){
+           
             $data['GT_Id'] = $_POST['type'];
         }
         if(isset($_POST['name']) && $_POST['name']!=''){
+            echo(3);
             $data['Goods_Name'] =  array('like',"%".$_POST['name']."%");
         }
         //$data['GT_Id'] =5;
@@ -57,6 +59,7 @@ class Index extends UserBase
         if(isset($data['GT_Id']) || isset($data['Goods_Name'])){
             $i = 0;
             foreach($type as $key => $value){
+                echo(2);
                 $goods[$i]['type'] = Db::table('goodstype')
                                         ->where('GT_Id',$value['GT_Id'])
                                         ->value('GT_Type');
@@ -108,7 +111,6 @@ class Index extends UserBase
                 $i++;
             }
         }
-       
         if($goods){
             return json_encode(array('result'=>1,'count'=>count($goods),'info'=>$goods));
         }else{
