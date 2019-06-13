@@ -59,7 +59,6 @@ class Index extends UserBase
         if(isset($data['GT_Id']) || isset($data['Goods_Name'])){
             $i = 0;
             foreach($type as $key => $value){
-                echo(2);
                 $goods[$i]['type'] = Db::table('goodstype')
                                         ->where('GT_Id',$value['GT_Id'])
                                         ->value('GT_Type');
@@ -99,11 +98,13 @@ class Index extends UserBase
                                         ->where('Goods_Flag','1')
                                         ->where('Goods_Status','1')
                                         ->select();
+                                        // $goods[$i]['list']['Goods_Time'] = date('Y-m-d',$value['Goods_Time']);
                 foreach($goods[$i]['list'] as $keyy => $valuee){
                     $goods[$i]['list'][$keyy]['img'] = Db::table('image')
                                                             ->where('G_Id',$valuee['Goods_Id'])
                                                             ->field('Image_Location')
                                                             ->select();
+                    
                     if(!$goods[$i]['list'][$keyy]['img']){
                         $goods[$i]['list'][$keyy]['img'][0]['Image_Location'] = '';
                     }

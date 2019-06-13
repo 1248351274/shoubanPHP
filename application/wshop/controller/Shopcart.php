@@ -137,6 +137,7 @@ class Shopcart extends UserBase
         $msg['eva'] = round(($aveva/5)*100)."%";
         $msg['user'] = $user;
         $m = array_merge($msg,$user);
+        // print_r($error)
         return json_encode(array('result'=>1,'info'=>$m));
     }
 }

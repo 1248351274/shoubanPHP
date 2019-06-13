@@ -1,9 +1,9 @@
-<?php if (!defined('THINK_PATH')) exit(); /*a:1:{s:82:"D:\yanqingProTool\PHPTutorial\WWW\wxshop/application/index\view\welcome\index.html";i:1529319161;}*/ ?>
+<?php if (!defined('THINK_PATH')) exit(); /*a:1:{s:82:"D:\yanqingProTool\PHPTutorial\WWW\wxshop/application/index\view\welcome\index.html";i:1559699287;}*/ ?>
 <!DOCTYPE html>
 <html>
     <head>
         <meta charset="UTF-8">
-        <title>微信二手商城后台</title>
+        <title>手办控后台</title>
         <meta name="renderer" content="webkit|ie-comp|ie-stand">
         <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
         <meta name="viewport" content="width=device-width,user-scalable=yes, minimum-scale=0.4, initial-scale=0.8,target-densitydpi=low-dpi" />
@@ -17,7 +17,7 @@
     </head>
     <body>
         <div class="x-body">
-            <blockquote class="layui-elem-quote">欢迎登录微信二手商城后台模版</blockquote>
+            <blockquote class="layui-elem-quote">欢迎登录手办控后台模版</blockquote>
             <fieldset class="layui-elem-field">
               <legend>信息统计</legend>
               <div class="layui-field-box">
