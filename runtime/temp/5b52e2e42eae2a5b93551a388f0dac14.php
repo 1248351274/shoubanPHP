@@ -1,4 +1,4 @@
-<?php if (!defined('THINK_PATH')) exit(); /*a:1:{s:82:"D:\yanqingProTool\PHPTutorial\WWW\wxshop/application/index\view\welcome\index.html";i:1559699287;}*/ ?>
+<?php if (!defined('THINK_PATH')) exit(); /*a:1:{s:82:"D:\yanqingProTool\PHPTutorial\WWW\wxshop/application/index\view\welcome\index.html";i:1560498855;}*/ ?>
 <!DOCTYPE html>
 <html>
     <head>
@@ -27,7 +27,7 @@
                             <th>统计</th>
                             <th>订单数</th>
                             <th>交易额</th>
-                            <th>待审核商品数</th>
+                            <th>待审核手办数</th>
                         </tr>
                     </thead>
                     <tbody>

@@ -1,4 +1,4 @@
-<?php if (!defined('THINK_PATH')) exit(); /*a:1:{s:84:"D:\yanqingProTool\PHPTutorial\WWW\wxshop/application/index\view\goods\goodslist.html";i:1559699193;}*/ ?>
+<?php if (!defined('THINK_PATH')) exit(); /*a:1:{s:84:"D:\yanqingProTool\PHPTutorial\WWW\wxshop/application/index\view\goods\goodslist.html";i:1560498403;}*/ ?>
 <!doctype html>
 <html lang="en">
 <head>
@@ -40,7 +40,7 @@
           <form class="layui-form layui-col-md12 x-so" action="<?php echo url('index/goods/goodslist'); ?>" method="get">
             <!-- <input class="layui-input" placeholder="开始日" name="start" id="start">
             <input class="layui-input" placeholder="截止日" name="end" id="end"> -->
-            <input type="text" name="good"  placeholder="请输入商品名" value="<?php echo !empty($good)?$good : '';; ?>" autocomplete="off" class="layui-input">
+            <input type="text" name="good"  placeholder="请输入手办名" value="<?php echo !empty($good)?$good : '';; ?>" autocomplete="off" class="layui-input">
             <input type="text" name="user"  placeholder="请输入用户名" value="<?php echo !empty($user)?$user : '';; ?>" autocomplete="off" class="layui-input">
             <button class="layui-btn"  lay-submit="" lay-filter="sreach"><i class="layui-icon">&#xe615;</i></button>
           </form>
@@ -55,7 +55,7 @@
               <th>
                 <div class="layui-unselect header layui-form-checkbox" lay-skin="primary"><i class="layui-icon">&#xe605;</i></div>
               </th>
-              <th>商品名称</th>
+              <th>手办名称</th>
               <th>数量</th>
               <th>价格</th>
               <th>简介</th>

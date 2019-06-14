@@ -25,6 +25,29 @@ class Goods extends UserBase
             return json_encode(array('result'=>'0','info'=>'暂无商品'));
         }
     }
+    public function getdynamics(){
+        $id = $this->login_id;
+        $msg = Db::table('dynamic')
+                    // ->where('U_Id',$id)
+                    ->order('Dynamic_Id desc')
+                    ->select();
+        // print_r($msg)
+        foreach($msg as $key => $value){
+            $msg[$key]['img']=Db::table('dyimg')
+                             ->order('dy_Id desc')
+                             ->where('dy_Id',$value['Dynamic_Id'])
+                             ->select();
+            $msg[$key]['user']= Db::table('user')
+                            ->where('User_Id',$value['U_Id'])
+                            ->select();
+        }
+
+        if($msg){
+            return json_encode(array('result'=>'1','count'=>count($msg),'info'=>$msg));
+        }else{
+            return json_encode(array('result'=>'0','info'=>'暂无手办'));
+        }
+    }
     public function getgoodsmsg(){
         $id = $_POST['Goods_Id'];
         $msg = Db::table('goods')
@@ -83,11 +106,12 @@ class Goods extends UserBase
     }
     public function addgood(){
         $data = $_POST;  
-        echo '$data';
+        // echo '$data';
         print_r($data);
         $data['U_Id'] = $this->login_id;
         $data['GT_Id'] = Db::table('goodstype')->where('GT_Type',$data['Goods_Type'])->value('GT_Id');
-        if(isset($data['Goods_Imgid'])){
+        print_r($data['Goods_Imgid']);
+        if(isset($data['Goods_Imgid'])){   //检测变量是否设置。
             $imgid = $data['Goods_Imgid'];
         }
         unset($data['Goods_Type']);// 销毁
@@ -102,6 +126,42 @@ class Goods extends UserBase
                     Db::table('image')->where('Image_Id',$value)->update(['G_Id'=>$gid]);
                 }
             }
+            // 提交事务
+            Db::commit();
+            return json_encode(array('result'=>1));
+
+        }catch(\Exception $e){
+            // 回滚事务
+            throw $e;
+            Db::rollback();
+            return json_encode(array('result'=>0));
+        }       
+    }
+    public function addDynamic(){
+        $data = $_POST;  
+        echo '$data';
+        print_r($data);
+        print_r($this->login_id);
+        $data['U_Id'] = $this->login_id;
+        print_r($data['Dy_Imgid']);
+        if(isset($data['Dy_Imgid'])){
+            $dyimgid = $data['Dy_Imgid'];
+        }
+        unset($data['Dy_Imgid']);
+        // 启动事务
+        Db::startTrans();
+        try{
+            Db::table('dynamic')->insert($data);
+            print_r('hahah');
+            $dyid = Db::table('dynamic')->where($data)->value('Dynamic_Id');
+            print_r('lallala');
+            if($dyimgid){
+                print_r('eeeee');
+                foreach($dyimgid as $key => $value){
+                    Db::table('dyimg')->where('Dimg_Id',$value)->update(['dy_Id'=>$dyid]);
+                }
+            }
+            print_r('wowoowwo');
             // 提交事务
             Db::commit();
             return json_encode(array('result'=>1));
@@ -158,6 +218,47 @@ class Goods extends UserBase
         print_r($rs);
         if($rs){
             unlink(substr($del['Image_Location'],8));
+            return json_encode(array('result'=>'1','id'=>$id));
+        }else{
+            return json_encode(array('result'=>'0'));
+        }
+    }
+    public function dyupimg(){
+        header('Content-type:text/html;charset=utf-8');
+        $base64_image_content = $_POST['uploadedfile'];
+        $gid = $_POST['dy_Id'];
+        //匹配出图片的格式
+        if (preg_match('/^(data:\s*image\/(\w+);base64,)/', $base64_image_content, $result)){
+            $type = $result[2];
+            $new_file = "public/images/dynamic/".date('Ymd',time())."/";
+            if(!file_exists($new_file))
+            {
+                //检查是否有该文件夹，如果没有就创建，并给予最高权限
+                mkdir($new_file, 0777,true);
+            }
+            $new_file = $new_file.time().".{$type}";
+            if (file_put_contents($new_file, base64_decode(str_replace($result[1], '', $base64_image_content)))){
+                $img['dy_Id'] = $gid;
+                $img['dy_imgLocation'] = '/wxshop/'.$new_file;
+                Db::table('dyimg')->insert($img);
+                $id = Db::table('dyimg')->where($img)->value('Dimg_Id');
+                return json_encode(array('result'=>'1','info'=>'/wxshop/'.$new_file,'id'=>$id));
+            }else{
+                return json_encode(array('result'=>'0','info'=>'上传失败'));
+            }
+        }else{
+            return json_encode(array('result'=>'0','info'=>'上传失败'));
+        }
+    }
+    public function dydelimg(){
+        $del['dy_Id'] = $_POST['dy_Id'];
+        $del['dy_imgLocation'] = $_POST['dy_imgLocation'];
+        $id = Db::table('dyimg')->where($del)->value('Dimg_Id');
+        $rs = Db::table('dyimg')->where($del)->delete();
+        print_r($del);
+        print_r($rs);
+        if($rs){
+            unlink(substr($del['dy_imgLocation'],8));
             return json_encode(array('result'=>'1','id'=>$id));
         }else{
             return json_encode(array('result'=>'0'));

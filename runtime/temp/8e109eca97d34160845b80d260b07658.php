@@ -1,4 +1,4 @@
-<?php if (!defined('THINK_PATH')) exit(); /*a:1:{s:79:"D:\yanqingProTool\PHPTutorial\WWW\wxshop/application/index\view\main\index.html";i:1559699259;}*/ ?>
+<?php if (!defined('THINK_PATH')) exit(); /*a:1:{s:79:"D:\yanqingProTool\PHPTutorial\WWW\wxshop/application/index\view\main\index.html";i:1560498402;}*/ ?>
 <!doctype html>
 <html lang="en">
 <head>
@@ -56,20 +56,20 @@
             <li>
                 <a href="javascript:;">
                     <i class="iconfont">&#xe723;</i>
-                    <cite>商品管理</cite>
+                    <cite>手办管理</cite>
                     <i class="iconfont nav_right">&#xe697;</i>
                 </a>
                 <ul class="sub-menu">
                     <li>
                         <a _href="<?php echo url('index/goods/goodslist'); ?>">
                             <i class="iconfont">&#xe6a7;</i>
-                            <cite>商品列表</cite>
+                            <cite>手办列表</cite>
                         </a>
                     </li>
                     <li>
                         <a _href="<?php echo url('index/goods/shlist'); ?>">
                             <i class="iconfont">&#xe6a7;</i>
-                            <cite>商品审核</cite>
+                            <cite>手办审核</cite>
                         </a>
                     </li >
                 </ul>

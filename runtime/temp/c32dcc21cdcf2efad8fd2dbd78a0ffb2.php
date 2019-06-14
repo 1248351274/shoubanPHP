@@ -1,4 +1,4 @@
-<?php if (!defined('THINK_PATH')) exit(); /*a:1:{s:80:"D:\yanqingProTool\PHPTutorial\WWW\wxshop/application/index\view\order\index.html";i:1559699267;}*/ ?>
+<?php if (!defined('THINK_PATH')) exit(); /*a:1:{s:80:"D:\yanqingProTool\PHPTutorial\WWW\wxshop/application/index\view\order\index.html";i:1560498414;}*/ ?>
 <!doctype html>
 <html lang="en">
 <head>
@@ -53,8 +53,8 @@
             <tr>
               
               <th>订单号</th>
-              <th>商品名称</th>
-              <th>所属店铺</th>
+              <th>手办名称</th>
+              <!-- <th>所属店铺</th> -->
               <th>所属用户</th>
               <th>订单数量</th>
               <th>订单金额</th>
@@ -67,7 +67,7 @@
                
               <td><?php echo $vo['Order_Id']; ?></td>
               <td><?php echo $vo['G_Name']; ?></td>
-              <td><?php echo $vo['Shop_Name']; ?></td>
+              <!-- <td><?php echo $vo['Shop_Name']; ?></td> -->
               <td><?php echo $vo['User_Name']; ?></td>
               <td><?php echo $vo['Order_Num']; ?></td>
               <td><?php echo $vo['Order_Price']; ?></td>
